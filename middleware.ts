@@ -39,7 +39,7 @@ export async function middleware(req: NextRequest) {
   if (!session) {
     const loginUrl = new URL("/login", req.url);
     // Optionally, add a callbackUrl to redirect back after successful login
-    loginUrl.searchParams.set("callbackUrl", pathname);
+    // loginUrl.searchParams.set("callbackUrl", pathname);
     return NextResponse.redirect(loginUrl);
   }
 
