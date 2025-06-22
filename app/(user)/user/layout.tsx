@@ -9,7 +9,7 @@ import ProfileAvatar from '@/components/layout/ProfileAvatar'
 export default function UserLayout({ children }: { children: ReactNode }) {
   return (
     <div>
-      <header className="px-4 py-4 md:py-5 sticky top-0 w-full lg:px-6 flex items-center border-b border-gray-200 bg-white">
+      <header className="px-4 py-4 z-20 md:py-5 sticky top-0 w-full lg:px-6 flex items-center border-b border-gray-200 bg-white">
         <Link href="/" className="flex items-center">
           <div className="h-8 w-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
             <span className="text-white font-bold text-sm">MB</span>

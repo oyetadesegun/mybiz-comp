@@ -1,3 +1,5 @@
+import { QuestionType } from "./types"
+
 export const mockGroups = [
   {
     id: "group1",
@@ -258,4 +260,122 @@ export const mockForumPosts = [
     replies: 28,
     likes: 35,
   },
+]
+
+export const mockQuestions: QuestionType[] = [
+  {
+    id: "1",
+    title: "How can I improve my startup's cash flow?",
+    content: "I've been struggling with managing cash flow in my early-stage startup. What are some practical steps I can take to improve this?",
+    date: new Date().toISOString(),
+    category: "finance",
+    author: {
+      id: "user_001",
+      name: "Jane Doe",
+      avatar: "https://i.pravatar.cc/150?img=1",
+      company: "Mock Company"
+    },
+    responseCount: 5,
+    upvotes: 24,
+    isPublic: true,
+    isAnonymous: false,
+    isOwn: false,
+    hasAnswered: true,
+    isSaved: false
+  },
+  {
+    id: "2",
+    title: "What marketing channels work best for B2B SaaS?",
+    content: "I'm launching a B2B SaaS product and need help deciding which marketing strategies to invest in.",
+    date: new Date().toISOString(),
+    category: "marketing",
+    author: {
+      id: "user_002",
+      name: "John Smith",
+      avatar: "https://i.pravatar.cc/150?img=2"
+    },
+    responseCount: 3,
+    upvotes: 17,
+    isPublic: true,
+    isAnonymous: false,
+    isOwn: false,
+    hasAnswered: false,
+    isSaved: true
+  },
+  {
+    id: "3",
+    title: "How do I scale my team without hurting culture?",
+    content: "We’re growing fast, and I want to make sure we don’t lose our team culture. Any advice on scaling without breaking what makes us great?",
+    date: new Date().toISOString(),
+    category: "hr",
+    author: {
+      id: "user_003",
+      name: "Linda Green",
+      avatar: "https://i.pravatar.cc/150?img=3"
+    },
+    responseCount: 8,
+    upvotes: 32,
+    isPublic: true,
+    isAnonymous: false,
+    isOwn: true,
+    hasAnswered: true,
+    isSaved: true
+  },
+  {
+    id: "4",
+    title: "What legal structure is best for a freelance consultant?",
+    content: "I'm starting as a freelance business consultant. Should I register as an LLC, sole proprietorship, or something else?",
+    date: new Date().toISOString(),
+    category: "legal",
+    author: {
+      id: "user_004",
+      name: "Carlos Mendes",
+      avatar: "https://i.pravatar.cc/150?img=4"
+    },
+    responseCount: 2,
+    upvotes: 10,
+    isPublic: false,
+    isAnonymous: true,
+    isOwn: false,
+    hasAnswered: false,
+    isSaved: false
+  },
+  {
+    id: "5",
+    title: "How do I prioritize tasks in operations management?",
+    content: "There are too many moving parts in our supply chain. How can I develop a better system to prioritize tasks and manage time effectively?",
+    date: new Date().toISOString(),
+    category: "operations",
+    author: {
+      id: "user_005",
+      name: "Fatima Yusuf",
+      avatar: "https://i.pravatar.cc/150?img=5"
+    },
+    responseCount: 4,
+    upvotes: 19,
+    isPublic: true,
+    isAnonymous: false,
+    isOwn: false,
+    hasAnswered: false,
+    isSaved: false
+  },
+  {
+    id: "6",
+    title: "Should I use serverless architecture for my MVP?",
+    content: "I'm building a tech MVP and considering going serverless (e.g. AWS Lambda). Is it the right choice for an early-stage product?",
+    date: new Date().toISOString(),
+    category: "technology",
+    author: {
+      id: "user_006",
+      name: "Daniel Kim",
+      avatar: "https://i.pravatar.cc/150?img=6"
+    },
+    responseCount: 6,
+    upvotes: 21,
+    isPublic: true,
+    isAnonymous: false,
+    isOwn: false,
+    hasAnswered: true,
+    isSaved: true
+  }
 ]
