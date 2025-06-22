@@ -6,8 +6,7 @@ export default function DashBoardLayout({ children }: { children: ReactNode }) {
   return (
     <div className='flex'>
       <SideBar>
-        not working
-        {/* <SignOut /> */}
+        <SignOut />
       </SideBar>
       <div className="mx-auto min-h-screen max-w-6xl pt-8">
         {children}

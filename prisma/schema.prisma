@@ -32,4 +32,5 @@ model Profile {
 enum Role {
   USER
   ADMIN
+  CUSTOMER_EXPERIENCE
 }
