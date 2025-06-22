@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function AdminBase() {
   return (
-    <div>Base Page</div>
+    <div>User Page</div>
   )
 }
