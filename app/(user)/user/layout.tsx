@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import ProfileAvatar from '@/components/layout/ProfileAvatar'
 
 
-export default function AdminLayout({ children }: { children: ReactNode }) {
+export default function UserLayout({ children }: { children: ReactNode }) {
   return (
     <div>
       <header className="px-4 py-4 md:py-5 sticky top-0 w-full lg:px-6 flex items-center border-b border-gray-200 bg-white">
