@@ -1,8 +1,8 @@
 
 import NextAuth from "next-auth"
 import Google from "next-auth/providers/google"
-import { createUser, getUserByEmail } from "./services/user-services";
-import { User } from "@prisma/client";
+import { createUser, getUserByEmail } from "./actions/user/user-services";
+import { Role, User } from "@prisma/client";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [Google],
@@ -29,10 +29,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (token?.role) {
         console.log(session.user)
         // const testUser = session.user as unknown as any
-        session.user.role = token.role as string;
+        session.user.role = token.role as Role;
       }
       return session;
     },
-    
+
   },
 })

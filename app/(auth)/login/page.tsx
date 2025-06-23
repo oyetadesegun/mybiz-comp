@@ -16,9 +16,10 @@ export default async function LoginPage() {
       redirect("/user/dashboard")
     } else if (session.user.role === "ADMIN") {
       redirect("/admin/dashboard")
-    } else {
-      redirect("/")
     }
+    // else {
+    //   redirect("/")
+    // }
   }
   return (
     <div className="flex min-h-screen items-center justify-center px-4 py-12 bg-gradient-to-br from-white to-[#F7F5FF]">

@@ -22,7 +22,7 @@ export default function QuestionCard({ question }: QuestionCardProps) {
             <p className="text-sm font-medium leading-none text-[#2D3748]">
               {question.isAnonymous ? "Anonymous" : question.author.name}
             </p>
-            <p className="text-xs text-[#4A5568]">{question.date}</p>
+            <p className="text-xs text-[#4A5568]">{"test"}</p>
           </div>
         </div>
         <Badge variant="outline" className="bg-[#F7F5FF] text-[#7E69AB] border-[#7E69AB]">
