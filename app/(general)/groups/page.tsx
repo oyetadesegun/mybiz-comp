@@ -10,7 +10,6 @@ import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { PlusCircle, Search, Users } from "lucide-react"
 import { mockGroups } from "@/lib/mock-data"
-import DashboardHeader from "@/components/dashboard-header"
 
 export default function GroupsPage() {
   const [groups, setGroups] = useState(mockGroups)
@@ -19,8 +18,7 @@ export default function GroupsPage() {
   const filteredGroups = groups.filter((group) => group.name.toLowerCase().includes(searchQuery.toLowerCase()))
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <DashboardHeader />
+    <div>
       <div className="flex flex-1">
         <aside className="hidden w-64 border-r bg-gray-50 dark:bg-gray-900 lg:block">
           <div className="flex h-full flex-col">

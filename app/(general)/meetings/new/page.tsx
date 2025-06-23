@@ -8,7 +8,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Mic, MicOff, VideoIcon, VideoOff, ScreenShare, Phone } from "lucide-react"
-import DashboardHeader from "@/components/dashboard-header"
 import { mockGroups } from "@/lib/mock-data"
 
 export default function NewMeetingPage() {
@@ -45,7 +44,6 @@ export default function NewMeetingPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <DashboardHeader />
       <main className="flex-1 overflow-hidden p-4 md:p-6 bg-gray-50 dark:bg-gray-900">
         <div className="mx-auto max-w-5xl h-full flex flex-col">
           <div className="mb-4">

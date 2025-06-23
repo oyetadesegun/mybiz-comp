@@ -15,7 +15,6 @@ import { Separator } from "@/components/ui/separator"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Calendar, Info, MessageSquare, Send, Users, Video } from "lucide-react"
 import { mockGroups, mockGroupMessages } from "@/lib/mock-data"
-import DashboardHeader from "@/components/dashboard-header"
 
 export default function GroupPage({ params }: { params: { id: string } }) {
   const router = useRouter()
@@ -51,8 +50,7 @@ export default function GroupPage({ params }: { params: { id: string } }) {
   }, [messages])
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <DashboardHeader />
+    <div>
       <div className="flex flex-1">
         <aside className="hidden w-64 border-r bg-gray-50 dark:bg-gray-900 lg:block">
           <div className="flex h-full flex-col">

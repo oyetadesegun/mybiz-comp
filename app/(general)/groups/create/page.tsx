@@ -11,7 +11,6 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Switch } from "@/components/ui/switch"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import DashboardHeader from "@/components/dashboard-header"
 
 export default function CreateGroupPage() {
   const router = useRouter()
@@ -30,8 +29,7 @@ export default function CreateGroupPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <DashboardHeader />
+    <div className="min-h-screen ">
       <main className="flex-1 overflow-auto p-4 md:p-6">
         <div className="mx-auto max-w-2xl">
           <Card>

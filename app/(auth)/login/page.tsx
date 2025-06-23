@@ -1,12 +1,25 @@
 
 import type React from "react"
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { auth } from "@/auth"
+import { redirect } from "next/navigation";
 
 import SignIn from "@/components/SignIn"
 import Link from "next/link"
 import LoginForm from "@/components/auth/LoginForm"
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  const session = await auth()
+
+  if (session) {
+    if (session.user.role === "USER") {
+      redirect("/user/dashboard")
+    } else if (session.user.role === "ADMIN") {
+      redirect("/admin/dashboard")
+    } else {
+      redirect("/")
+    }
+  }
   return (
     <div className="flex min-h-screen items-center justify-center px-4 py-12 bg-gradient-to-br from-white to-[#F7F5FF]">
       <Card className="w-full max-w-md border-[#E2E8F0] shadow-lg">

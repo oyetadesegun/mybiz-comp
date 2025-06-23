@@ -8,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Calendar, Clock, Video } from "lucide-react"
 import { mockMeetings } from "@/lib/mock-data"
-import DashboardHeader from "@/components/dashboard-header"
+
 
 export default function MeetingsPage() {
   const [meetings, setMeetings] = useState(mockMeetings)
@@ -18,8 +18,7 @@ export default function MeetingsPage() {
   const pastMeetings = meetings.filter((meeting) => meeting.isPast)
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <DashboardHeader />
+    <div className="min-h-screen">
       <div className="flex flex-1">
         <aside className="hidden w-64 border-r bg-gray-50 dark:bg-gray-900 lg:block">
           <div className="flex h-full flex-col">

@@ -16,7 +16,7 @@ import { CalendarIcon } from "lucide-react"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
 import { mockGroups } from "@/lib/mock-data"
-import DashboardHeader from "@/components/dashboard-header"
+
 
 export default function ScheduleMeetingPage({ params }: { params: { id: string } }) {
   const router = useRouter()
@@ -38,8 +38,7 @@ export default function ScheduleMeetingPage({ params }: { params: { id: string }
   }
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <DashboardHeader />
+    <div className="flex flex-col">
       <main className="flex-1 overflow-auto p-4 md:p-6">
         <div className="mx-auto max-w-2xl">
           <Card>
