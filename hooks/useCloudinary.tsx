@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { toast } from 'sonner';
+import CloseToast from '@/components/global/CloseToast';
 
 export type UploadInfo = {
   progress: number;
@@ -80,7 +81,7 @@ export default function useCloudinaryUpload({ onError }: CloudinaryProp = {}) {
       );
       setData(response.data);
       setUploadInfo(null);
-      toast.success('File uploaded successfully!');
+      toast.success('File uploaded successfully!', { action: <CloseToast />, duration: 2000, position: "top-left" });
       return response.data;
     } catch (err) {
       const axiosError = err as AxiosError;
@@ -92,7 +93,7 @@ export default function useCloudinaryUpload({ onError }: CloudinaryProp = {}) {
         toast.info('File upload cancelled.');
       } else {
         console.error("Cloudinary upload failed:", axiosError);
-        toast.error('File upload could not be completed');
+        toast.error('File upload could not be completed', { action: <CloseToast /> });
         if (onError) { onError(); }
       }
       return null;

@@ -7,3 +7,10 @@ export type DocumentMetaData = {
 };
 
 export type NullableType<T> = T | null | Record<string, never> | undefined;
+
+
+export type ServerActionState<T> = Partial<Record<keyof T, string[]>> & {
+  message?: string;
+  success?: boolean;
+}
+

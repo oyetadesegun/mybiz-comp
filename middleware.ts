@@ -32,7 +32,8 @@ export async function middleware(req: NextRequest) {
   const session = await auth();
   const pathname = req.nextUrl.pathname;
 
-  console.log(session, "Session in middleware"); // For debugging
+  // console.log(session, "Session in middleware"); 
+  // For debugging
 
   // 1. If no session, redirect to login
   // This applies to all routes defined in `config.matcher`

@@ -1,31 +1,30 @@
-"use client"
+import { BadgeInfo } from 'lucide-react';
+import { Toaster as Toast } from 'sonner';
 
-import { useTheme } from "next-themes"
-import { Toaster as Sonner } from "sonner"
+import { TOAST_DURATION_IN_MS } from '@/constants/Constants';
+import SvgIcons from '@/icons/SvgIcons';
 
-type ToasterProps = React.ComponentProps<typeof Sonner>
-
-const Toaster = ({ ...props }: ToasterProps) => {
-  const { theme = "system" } = useTheme()
-
+function Toaster() {
   return (
-    <Sonner
-      theme={theme as ToasterProps["theme"]}
-      className="toaster group"
+    <Toast
+      position="top-center"
+      duration={TOAST_DURATION_IN_MS}
+      className="toaster group sonner-toast-custom"
+      icons={{
+        success: <SvgIcons.SuccessCheck />,
+        error: <SvgIcons.ErrorIcon />,
+        info: <BadgeInfo className="mr-1 scale-75 opacity-75" />,
+      }}
       toastOptions={{
+        className: 'rounded-2xl pointer-events-auto',
         classNames: {
-          toast:
-            "group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg",
-          description: "group-[.toast]:text-muted-foreground",
-          actionButton:
-            "group-[.toast]:bg-primary group-[.toast]:text-primary-foreground",
-          cancelButton:
-            "group-[.toast]:bg-muted group-[.toast]:text-muted-foreground",
+          error: 'bg-[#FCF5F6] border-2 border-[#D62D2D]',
+          success: 'bg-[#edfff7] border-2 border-green-600',
+          info: 'border-2',
         },
       }}
-      {...props}
     />
-  )
+  );
 }
 
-export { Toaster }
+export default Toaster;

@@ -1,14 +1,14 @@
 "use client"
 
 import type React from "react"
+import { useActionState, useTransition } from 'react'
+import { createNewHelpForm } from "@/actions/user/get-help"
 import { useState, useRef } from "react"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
 
-// Reusable & UI Components (assuming these are in your project)
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import InputField from "@/components/form/InputField"
@@ -16,41 +16,12 @@ import SelectField from "@/components/form/SelectField"
 import TextAreaInput from "@/components/form/TextAreaInput"
 import MultiFileUpload, { UploadImperativeRef } from "@/components/form/MultiFileUpload" // labelText for your multi-upload component
 
-// Icons
 import { ArrowLeft, Shield, Phone } from "lucide-react"
 import RequiredLabel from "@/components/global/RequiredLabel"
+import { helpFormSchema, HelpFormType } from "@/validations/get-help-validation"
+import { ServerActionState } from "@/types/GenericTypes"
+import { useFeedBackToast } from "@/hooks/useFeedBackToast"
 
-// --- Zod Validation Schema ---
-const helpFormSchema = z.object({
-  // Step 1
-  title: z.string().min(5, { message: "Title must be at least 5 characters long." }),
-  businessName: z.string().min(2, { message: "Business name is required." }),
-  businessType: z.string({ required_error: "Please select a business type." }),
-
-  businessChallenge: z.string().min(20, { message: "Please describe your challenge in more detail." }),
-  category: z.string({ required_error: "Please select a category." }),
-  urgency: z.string({ required_error: "Please select an urgency level." }),
-
-  // Step 2
-  fullName: z.string().min(2, { message: "Full name is required." }),
-  businessAddress: z.string({ required_error: "Please select a business type." }),
-  phone: z
-    .string()
-    .min(10, { message: "Please enter a valid phone number." })
-    .regex(/^(\+?\d{1,4}?[-.\s]?)?(\(?\d{3}\)?[-.\s]?)?[\d\s.-]{7,15}$/, "Invalid phone number format."),
-  willingToPay: z.string().min(1, { message: "Please enter an amount." }),
-  referralCode: z.string().optional(),
-  websiteUrl: z.string().url({ message: "Please enter a valid URL." }).optional().or(z.literal("")),
-  instagramUrl: z.string().url({ message: "Please enter a valid URL." }).optional().or(z.literal("")),
-  twitterUrl: z.string().url({ message: "Please enter a valid URL." }).optional().or(z.literal("")),
-  facebookUrl: z.string().url({ message: "Please enter a valid URL." }).optional().or(z.literal("")),
-  documents: z.any().optional(), // Type for file uploads can be more specific (e.g., z.array(z.instanceof(File)))
-})
-
-// --- Form Type from Schema ---
-type HelpFormType = z.infer<typeof helpFormSchema>
-
-// --- Static data for Selects and Uploads ---
 const businessTypeOptions = [
   // A selection of business types for brevity
   { value: "law-firm", label: "Law Firm" },
@@ -95,6 +66,12 @@ export default function GetHelpPage() {
   const [step, setStep] = useState(1)
   const uploadRef = useRef<UploadImperativeRef>(null)
 
+  const initialState = { errors: {} as ServerActionState<HelpFormType> }
+
+  const [state, formAction, isPending] = useActionState(createNewHelpForm, initialState)
+
+  useFeedBackToast(state)
+
   const {
     handleSubmit,
     trigger,
@@ -104,8 +81,25 @@ export default function GetHelpPage() {
     formState: { errors, isSubmitting },
   } = useForm<HelpFormType>({
     resolver: zodResolver(helpFormSchema),
-    // mode: "onBlur",
+    mode: "onBlur",
   })
+
+  const [isTransitionPending, transition] = useTransition()
+
+  const handleServerSubmit = async (data: HelpFormType) => {
+    const formData = new FormData()
+    Object.entries(data).forEach(([key, value]) => {
+      formData.append(key, value as string)
+      if (key === "documents") {
+        formData.append("documents", JSON.stringify(value)) // must stringify array
+      } else {
+        formData.append(key, value as string)
+      }
+    })
+    transition(() => {
+      formAction(formData)
+    })
+  }
 
   // Watch the value for the file upload component and select fields
   const documents = watch("documents")
@@ -129,12 +123,7 @@ export default function GetHelpPage() {
     }
   }
 
-  const onSubmit = async (data: HelpFormType) => {
-    // In a real app, this would be a mutation call to your backend
-    console.log("Form Data Submitted:", data)
-    await new Promise((resolve) => setTimeout(resolve, 1500)) // Simulate API latency
-    router.push("/thank-you")
-  }
+
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -180,7 +169,7 @@ export default function GetHelpPage() {
               </div>
             </CardHeader>
 
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(handleServerSubmit)}>
               <CardContent className="space-y-6">
                 <div className={`${step !== 1 && "hidden"}`}>
                   <div>

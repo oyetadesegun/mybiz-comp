@@ -5,7 +5,7 @@ import { ArrowRight, Shield, Users, TrendingUp, MessageCircle, Phone, Star } fro
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex-col min-h-screen">
       <header className="px-4 lg:px-6 h-16 flex items-center border-b border-gray-200 bg-white sticky top-0 z-50">
         <Link href="/" className="flex items-center">
           <div className="h-8 w-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
@@ -13,7 +13,7 @@ export default function Home() {
           </div>
           <span className="ml-2 text-xl font-bold text-gray-900">MyBiz.Com</span>
         </Link>
-        <nav className="ml-auto flex gap-4 sm:gap-6 items-center">
+        <nav className="ml-auto gap-4 sm:gap-6 flex items-center">
           <Link href="/forum" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">
             Community Forum
           </Link>
@@ -34,7 +34,7 @@ export default function Home() {
         <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-br from-blue-50 to-purple-50">
           <div className="container px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 xl:grid-cols-2">
-              <div className="flex flex-col justify-center space-y-4">
+              <div className="flex-col justify-center space-y-4">
                 <div className="space-y-2">
                   <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-gray-900">
                     Your Business Companion for Growth & Success
@@ -44,7 +44,7 @@ export default function Home() {
                     confidence. We're here to help your business thrive.
                   </p>
                 </div>
-                <div className="flex flex-col gap-2 min-[400px]:flex-row">
+                <div className="flex-col gap-2 min-[400px]:flex-row">
                   <Link href="/get-help">
                     <Button size="lg" className="px-8 bg-blue-600 hover:bg-blue-700 text-white">
                       Share Your Challenge
@@ -78,7 +78,7 @@ export default function Home() {
         {/* Features Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-white">
           <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+            <div className="flex-col flex items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-gray-900">
                   How We Help Your Business
@@ -133,7 +133,7 @@ export default function Home() {
         {/* Process Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-50">
           <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+            <div className="flex-col flex items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-gray-900">
                   Simple 3-Step Process
@@ -143,9 +143,9 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-3 lg:gap-12">
-              <div className="flex flex-col justify-center space-y-4 text-center">
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-600 text-white mx-auto">
+            <div className="mx-auto grid max-w-5xl flex items-center gap-6 py-12 lg:grid-cols-3 lg:gap-12">
+              <div className="flex-col justify-center space-y-4 text-center">
+                <div className="flex h-12 w-12 flex items-center justify-center rounded-lg bg-blue-600 text-white mx-auto">
                   1
                 </div>
                 <h3 className="text-xl font-bold text-gray-900">Share Your Challenge</h3>
@@ -154,8 +154,8 @@ export default function Home() {
                   follow-up.
                 </p>
               </div>
-              <div className="flex flex-col justify-center space-y-4 text-center">
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-600 text-white mx-auto">
+              <div className="flex-col justify-center space-y-4 text-center">
+                <div className="flex h-12 w-12 flex items-center justify-center rounded-lg bg-blue-600 text-white mx-auto">
                   2
                 </div>
                 <h3 className="text-xl font-bold text-gray-900">Get Personal Call</h3>
@@ -163,8 +163,8 @@ export default function Home() {
                   Our customer experience team calls you to understand your needs and helps you create your account.
                 </p>
               </div>
-              <div className="flex flex-col justify-center space-y-4 text-center">
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-600 text-white mx-auto">
+              <div className="flex-col justify-center space-y-4 text-center">
+                <div className="flex h-12 w-12 flex items-center justify-center rounded-lg bg-blue-600 text-white mx-auto">
                   3
                 </div>
                 <h3 className="text-xl font-bold text-gray-900">Receive Expert Advice</h3>
@@ -179,7 +179,7 @@ export default function Home() {
         {/* CTA Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-blue-600">
           <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+            <div className="flex-col flex items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-white">
                   Ready to Grow Your Business?
@@ -188,7 +188,7 @@ export default function Home() {
                   Join thousands of business owners who trust MyBiz.Com for their growth and success.
                 </p>
               </div>
-              <div className="flex flex-col gap-2 min-[400px]:flex-row">
+              <div className="flex-col gap-2 min-[400px]:flex-row">
                 <Link href="/get-help">
                   <Button size="lg" className="px-8 bg-white text-blue-600 hover:bg-gray-100">
                     <Phone className="mr-2 h-4 w-4" />
@@ -209,14 +209,14 @@ export default function Home() {
         {/* Testimonials */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-white">
           <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+            <div className="flex-col flex items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-gray-900">
                   What Business Owners Say
                 </h2>
               </div>
             </div>
-            <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-3 lg:gap-12">
+            <div className="mx-auto grid max-w-5xl flex items-center gap-6 py-12 lg:grid-cols-3 lg:gap-12">
               <Card className="border-gray-200 shadow-sm">
                 <CardHeader>
                   <div className="flex items-center space-x-1">
@@ -269,7 +269,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full border-t border-gray-200 px-4 md:px-6 bg-gray-50">
+      <footer className="flex-col gap-2 sm:flex-row py-6 w-full border-t border-gray-200 px-4 md:px-6 bg-gray-50">
         <p className="text-xs text-gray-600">© 2024 MyBiz.Com. All rights reserved.</p>
         <nav className="sm:ml-auto flex gap-4 sm:gap-6">
           <Link href="/terms" className="text-xs text-gray-600 hover:text-blue-600 transition-colors">
