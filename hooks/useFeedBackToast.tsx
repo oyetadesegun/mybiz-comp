@@ -6,7 +6,12 @@ import { toast } from "sonner";
 export function useFeedBackToast(state: any) {
 
   useEffect(() => {
-    if (!state.success) {
+
+    if (!state) {
+      return
+    }
+
+    if (state.success === false) {
       toast.error(state.message || "Something went wrong", { action: <CloseToast /> })
     }
 

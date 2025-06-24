@@ -15,7 +15,7 @@ export const helpFormSchema = z.object({
 
   // Step 2
   fullName: z.string().min(2, { message: "Full name is required." }),
-  businessAddress: z.string({ required_error: "Please select a business type." }),
+  businessAddress: z.string({ required_error: "Please select a business type." }).min(5),
   phone: z
     .string()
     .min(10, { message: "Please enter a valid phone number." })

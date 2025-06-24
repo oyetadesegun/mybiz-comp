@@ -1,0 +1,11 @@
+model DocumentMetaData {
+  id   String @id @default(uuid())
+  name String
+  size String
+  url  String
+
+  getHelpQuestionId String?
+  GetHelpQuestion   GetHelpQuestion? @relation(fields: [getHelpQuestionId], references: [id])
+
+  createdAt DateTime @default(now())
+}

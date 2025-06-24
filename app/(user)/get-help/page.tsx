@@ -173,7 +173,7 @@ export default function GetHelpPage() {
               <CardContent className="space-y-6">
                 <div className={`${step !== 1 && "hidden"}`}>
                   <div>
-                    <RequiredLabel>Title or Short Description *</RequiredLabel>
+                    <RequiredLabel>Title or Short Description</RequiredLabel>
                     <InputField
                       fieldName="title"
                       register={register}
@@ -184,7 +184,7 @@ export default function GetHelpPage() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <RequiredLabel>Business Name *</RequiredLabel>
+                      <RequiredLabel>Business Name</RequiredLabel>
                       <InputField
                         fieldName="businessName"
                         register={register}
@@ -193,7 +193,7 @@ export default function GetHelpPage() {
                       />
                     </div>
                     <div>
-                      <RequiredLabel>What is your business about? *</RequiredLabel>
+                      <RequiredLabel>What is your business about?</RequiredLabel>
                       <SelectField
                         selectName="businessType"
                         setValue={setValue}
@@ -205,7 +205,7 @@ export default function GetHelpPage() {
                     </div>
                   </div>
                   <div>
-                    <RequiredLabel>What business challenge are you facing? *</RequiredLabel>
+                    <RequiredLabel>What business challenge are you facing?</RequiredLabel>
                     <TextAreaInput
                       fieldName="businessChallenge"
                       register={register}
@@ -217,7 +217,7 @@ export default function GetHelpPage() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <RequiredLabel>Category *</RequiredLabel>
+                      <RequiredLabel>Category</RequiredLabel>
                       <SelectField
                         selectName="category"
                         setValue={setValue}
@@ -228,7 +228,7 @@ export default function GetHelpPage() {
                       />
                     </div>
                     <div>
-                      <RequiredLabel>How urgent is this? *</RequiredLabel>
+                      <RequiredLabel>How urgent is this?</RequiredLabel>
                       <SelectField
                         selectName="urgency"
                         setValue={setValue}
@@ -242,7 +242,7 @@ export default function GetHelpPage() {
                 </div>
                 <div className={`${step === 1 && 'hidden'}`}>
                   <div>
-                    <RequiredLabel>Your Full Name *</RequiredLabel>
+                    <RequiredLabel>Your Full Name</RequiredLabel>
                     <InputField
                       fieldName="fullName"
                       register={register}
@@ -251,7 +251,7 @@ export default function GetHelpPage() {
                     />
                   </div>
                   <div>
-                    <RequiredLabel>Business Address *</RequiredLabel>
+                    <RequiredLabel>Business Address</RequiredLabel>
                     <InputField
                       fieldName="businessAddress"
                       register={register}
@@ -261,7 +261,7 @@ export default function GetHelpPage() {
                   </div>
                   <div className="relative">
                     <RequiredLabel>
-                      Phone Number *
+                      Phone Number
                       <span className="relative ml-1 top-[2px] text-xs bottom-2 text-gray-600">Our customer experience team will call you within 24 hours."</span>
                     </RequiredLabel>
                     <InputField
@@ -273,7 +273,7 @@ export default function GetHelpPage() {
                   </div>
                   <div className="relative">
                     <RequiredLabel>
-                      How much are you willing to pay? *
+                      How much are you willing to pay?
                       <span className="ml-1 relative top-[2px] text-xs bottom-2 text-gray-600">Provide a budget for the service you need."</span>
                     </RequiredLabel>
                     <InputField

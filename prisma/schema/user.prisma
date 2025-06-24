@@ -1,0 +1,21 @@
+model User {
+  id      String   @id @default(uuid())
+  email   String   @unique
+  name    String?
+  role    Role     @default(USER)
+  profile Profile?
+}
+
+model Profile {
+  id        String            @id @default(uuid())
+  bio       String
+  user      User              @relation(fields: [userId], references: [id])
+  userId    String            @unique
+  questions GetHelpQuestion[]
+}
+
+enum Role {
+  USER
+  ADMIN
+  STAFF
+}

@@ -1,6 +1,8 @@
 'use server'
 
+import prisma from "@/prisma/client/client";
 import { helpFormSchema, HelpFormType } from "@/validations/get-help-validation"
+import { redirect } from "next/navigation";
 
 export async function createNewHelpForm(
   prevState: { errors: Partial<Record<keyof HelpFormType, string[]>> } | undefined,
@@ -36,12 +38,40 @@ export async function createNewHelpForm(
     }
   }
 
-  if (true) {
-    return {
-      errors: {},
-      success: true,
-      message: "Successful"
+
+  const payload = parsed.data
+
+  await prisma.getHelpQuestion.create({
+    data: {
+      profileId: null, // or actual user ID if available
+
+      title: payload.title,
+      businessName: payload.businessName,
+      businessType: payload.businessType,
+      businessChallenge: payload.businessChallenge,
+      businessCategory: payload.category,
+      urgencyLevel: payload.urgency,
+      fullName: payload.fullName,
+      businessAddress: payload.businessAddress,
+      phone: payload.phone,
+      willingToPay: payload.willingToPay,
+      websiteUrl: payload.websiteUrl,
+      instagramUrl: payload.instagramUrl,
+      twitterUrl: payload.twitterUrl,
+      facebookUrl: payload.facebookUrl,
+
+      documents: payload.documents && payload.documents.length > 0
+        ? {
+          create: payload.documents.map(doc => ({
+            name: doc.name,
+            size: doc.size,
+            url: doc.url
+          }))
+        }
+        : undefined
     }
-  }
+  });
+
+  redirect("/thank-you")
 
 }

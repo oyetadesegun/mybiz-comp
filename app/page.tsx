@@ -31,12 +31,12 @@ export default function Home() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-br from-blue-50 to-purple-50">
-          <div className="container px-4 md:px-6">
+        <section className="w-full bg-re py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-br from-blue-50 to-purple-50">
+          <div className="container mx-auto px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 xl:grid-cols-2">
               <div className="flex-col justify-center space-y-4">
                 <div className="space-y-2">
-                  <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-gray-900">
+                  <h1 className="text-3xl font-bold sm:text-4xl md:text-5xl lg:text-4xl text-gray-900">
                     Your Business Companion for Growth & Success
                   </h1>
                   <p className="max-w-[600px] text-gray-600 md:text-xl">
@@ -44,7 +44,7 @@ export default function Home() {
                     confidence. We're here to help your business thrive.
                   </p>
                 </div>
-                <div className="flex-col gap-2 min-[400px]:flex-row">
+                <div className="flex flex-col gap-4 min-[400px]:flex-row">
                   <Link href="/get-help">
                     <Button size="lg" className="px-8 bg-blue-600 hover:bg-blue-700 text-white">
                       Share Your Challenge
@@ -188,7 +188,7 @@ export default function Home() {
                   Join thousands of business owners who trust MyBiz.Com for their growth and success.
                 </p>
               </div>
-              <div className="flex-col gap-2 min-[400px]:flex-row">
+              <div className="flex flex-col gap-2 min-[400px]:flex-row">
                 <Link href="/get-help">
                   <Button size="lg" className="px-8 bg-white text-blue-600 hover:bg-gray-100">
                     <Phone className="mr-2 h-4 w-4" />

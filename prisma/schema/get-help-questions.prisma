@@ -1,0 +1,25 @@
+model GetHelpQuestion {
+  id        String   @id @default(uuid())
+  profileId String?
+  Profile   Profile? @relation(fields: [profileId], references: [id])
+
+  title             String
+  businessName      String
+  businessType      String
+  businessChallenge String
+  businessCategory  String
+  urgencyLevel      String
+  fullName          String
+  businessAddress   String
+  phone             String
+  willingToPay      String
+  websiteUrl        String?
+  instagramUrl      String?
+  twitterUrl        String?
+  facebookUrl       String?
+
+  documents DocumentMetaData[] // one-to-many relationship to reusable Document model
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
