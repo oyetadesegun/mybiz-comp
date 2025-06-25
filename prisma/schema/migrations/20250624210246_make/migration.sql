@@ -1,5 +1,0 @@
--- AlterTable
-ALTER TABLE "GetHelpQuestion" ALTER COLUMN "websiteUrl" DROP NOT NULL,
-ALTER COLUMN "instagramUrl" DROP NOT NULL,
-ALTER COLUMN "twitterUrl" DROP NOT NULL,
-ALTER COLUMN "facebookUrl" DROP NOT NULL;

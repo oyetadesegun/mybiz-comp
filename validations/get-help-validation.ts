@@ -8,7 +8,7 @@ export const helpFormSchema = z.object({
   title: z.string().min(5, { message: "Title must be at least 5 characters long." }),
   businessName: z.string().min(2, { message: "Business name is required." }),
   businessType: z.string({ required_error: "Please select a business type." }),
-
+  emailAddress: z.string({ required_error: "Email is required" }).email("Email is invalid"),
   businessChallenge: z.string().min(2, { message: "Please describe your challenge in more detail." }),
   category: z.string({ required_error: "Please select a category." }),
   urgency: z.string({ required_error: "Please select an urgency level." }),

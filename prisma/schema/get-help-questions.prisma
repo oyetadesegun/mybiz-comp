@@ -10,6 +10,7 @@ model GetHelpQuestion {
   businessCategory  String
   urgencyLevel      String
   fullName          String
+  emailAddress      String
   businessAddress   String
   phone             String
   willingToPay      String

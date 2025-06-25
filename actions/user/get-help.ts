@@ -44,7 +44,7 @@ export async function createNewHelpForm(
   await prisma.getHelpQuestion.create({
     data: {
       profileId: null, // or actual user ID if available
-
+      emailAddress: payload.emailAddress,
       title: payload.title,
       businessName: payload.businessName,
       businessType: payload.businessType,

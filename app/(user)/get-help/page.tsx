@@ -251,6 +251,15 @@ export default function GetHelpPage() {
                     />
                   </div>
                   <div>
+                    <RequiredLabel>Email Address</RequiredLabel>
+                    <InputField
+                      fieldName="emailAddress"
+                      register={register}
+                      error={errors.emailAddress?.message}
+                      labelText="Enter your Email Address"
+                    />
+                  </div>
+                  <div>
                     <RequiredLabel>Business Address</RequiredLabel>
                     <InputField
                       fieldName="businessAddress"

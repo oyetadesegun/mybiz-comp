@@ -26,26 +26,6 @@ export default function ForumPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="px-4 lg:px-6 h-16 flex items-center border-b border-gray-200 bg-white">
-        <Link href="/" className="flex items-center">
-          <div className="h-8 w-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">MB</span>
-          </div>
-          <span className="ml-2 text-xl font-bold text-gray-900">MyBiz.Com</span>
-        </Link>
-        <div className="ml-auto flex items-center gap-4">
-          <Link href="/get-help">
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white">Get Private Help</Button>
-          </Link>
-          <Link href="/forum/new">
-            <Button variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-50">
-              <PlusCircle className="mr-2 h-4 w-4" />
-              New Post
-            </Button>
-          </Link>
-        </div>
-      </header>
-
       <main className="flex-1 overflow-auto p-4 md:p-6 bg-gray-50">
         <div className="mx-auto max-w-4xl space-y-6">
           <div className="flex items-center justify-between">

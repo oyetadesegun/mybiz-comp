@@ -1,7 +1,5 @@
 "use client"
 
-import type React from "react"
-
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
@@ -39,20 +37,6 @@ export default function NewForumPostPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="px-4 lg:px-6 h-16 flex items-center border-b border-gray-200 bg-white">
-        <Link href="/" className="flex items-center">
-          <div className="h-8 w-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">MB</span>
-          </div>
-          <span className="ml-2 text-xl font-bold text-gray-900">MyBiz.Com</span>
-        </Link>
-        <div className="ml-auto flex items-center gap-4">
-          <Button variant="ghost" onClick={() => router.back()} className="text-gray-600 hover:text-blue-600">
-            Cancel
-          </Button>
-        </div>
-      </header>
-
       <main className="flex-1 overflow-auto p-4 md:p-6 bg-gray-50">
         <div className="mx-auto max-w-2xl">
           <Button variant="ghost" onClick={() => router.back()} className="mb-4 text-gray-600 hover:text-blue-600">
