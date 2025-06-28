@@ -5,6 +5,10 @@ model User {
   role     Role     @default(USER)
   password String?
   profile  Profile?
+
+  // Add these back-relations for Response
+  staffResponses    Response[] @relation("StaffResponses")
+  customerResponses Response[] @relation("CustomerResponses")
 }
 
 model Profile {
