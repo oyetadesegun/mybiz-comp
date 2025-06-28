@@ -128,7 +128,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
     async session({ session, token }) {
       if (token?.role) {
-        console.log(session.user)
         // const testUser = session.user as unknown as any
         session.user.role = token.role as Role;
       }
