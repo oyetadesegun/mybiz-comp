@@ -1,9 +1,10 @@
 model User {
-  id      String   @id @default(uuid())
-  email   String   @unique
-  name    String?
-  role    Role     @default(USER)
-  profile Profile?
+  id       String   @id @default(uuid())
+  email    String   @unique
+  name     String?
+  role     Role     @default(USER)
+  password String?
+  profile  Profile?
 }
 
 model Profile {

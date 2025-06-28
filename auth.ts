@@ -1,11 +1,112 @@
 
-import NextAuth from "next-auth"
+import NextAuth, { CredentialsSignin } from "next-auth"
 import Google from "next-auth/providers/google"
+import Credentials from "next-auth/providers/credentials"
 import { createUser, getUserByEmail } from "./actions/user/user-services";
 import { Role, User } from "@prisma/client";
+import { bcryptCompare, bcryptHash } from "./actions/services/hash-service";
 
+class CustomError extends CredentialsSignin {
+  code: string;
+  constructor(message: string, extras: Record<string, string> = {}) {
+    const query = new URLSearchParams({ message, ...extras }).toString();
+    super(query); // store everything in message/query string
+    this.name = "CustomError";
+    this.code = query;
+
+  }
+}
+
+
+//TODO  use password supplied
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [Google],
+  secret: process.env.NEXTAUTH_SECRET,
+  providers: [
+    Google,
+    Credentials({
+      credentials: {
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
+        firstName: { label: "First Name", type: "text" },
+        lastName: { label: "Last Name", type: "text" },
+      },
+      authorize: async (credentials) => {
+        console.log(process.env.NEXTAUTH_SECRET)
+        const { email, password, firstName, lastName } = credentials ?? {}
+
+        console.log("Auth attempt:", { email, password, firstName, lastName })
+
+        if (typeof email !== "string" || typeof password !== "string") {
+          throw new CustomError("Supply Email and password");
+        }
+
+        const isSignupFlow =
+          typeof firstName === "string" &&
+          typeof lastName === "string" &&
+          firstName.trim() !== "" &&
+          lastName.trim() !== ""
+
+        if (isSignupFlow) {
+          // Signup flow
+          const existing = await getUserByEmail(email)
+          if (existing) {
+            throw new CustomError("Emnail already exists", {
+              email,
+              firstName,
+              lastName,
+              password,
+              mode: 'signup'
+            });
+          }
+
+          const hashedPassword = await bcryptHash(password)
+
+          const newUser = await createUser({
+            email,
+            name: `${firstName.trim()} ${lastName.trim()}`,
+            password: hashedPassword,
+          })
+
+          return newUser
+        }
+
+        console.log("login flow")
+
+        // Login flow
+        const user = await getUserByEmail(email)
+        console.log(user)
+        if (!user) {
+          throw new CustomError("Email supplied not registered", {
+            email, password
+          });
+        }
+
+        if (!user.password) {
+          // This case should ideally not happen if password is a required field
+          throw new CustomError("Invalid Credentials: Login with google", {
+            email, password
+          });
+        }
+
+
+        console.log(user)
+        const isPasswordValid = await bcryptCompare({
+          password,
+          hashedPassword: user.password,
+        })
+
+        console.log("here", isPasswordValid)
+
+        if (!isPasswordValid) {
+          throw new CustomError("Invalid Credentials supplied", {
+            email, password
+          });
+        }
+
+        return user
+      }
+    })
+  ],
   callbacks: {
     async jwt({ token, user }) {
 
@@ -33,6 +134,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return session;
     },
-
   },
+  pages: {
+    signIn: '/auth',
+    error: "/login"
+  }
 })

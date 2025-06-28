@@ -1,6 +1,7 @@
 import { signIn } from "@/auth"
+import { Button } from "./ui/button"
 
-export default function SignIn() {
+export default function GoogleSignIn() {
   return (
     <form
       className="w-full flex justify-center"
@@ -9,7 +10,7 @@ export default function SignIn() {
         await signIn("google", { redirectTo: "/admin" })
       }}
     >
-      <button type="submit" className="mx-auto w-fit" >Signin with Google</button>
+      <Button variant="ghost" type="submit" className="mx-4  w-full text-gray-900 bg-accent" >Continuue with Google</Button>
     </form>
   )
 } 

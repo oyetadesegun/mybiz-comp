@@ -362,7 +362,7 @@ export default function GetHelpPage() {
                   </Button>
                 ) : (
                   <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white h-12 mt-4" disabled={isSubmitting}>
-                    {isSubmitting ? "Submitting..." : "Submit & Get Help"}
+                    {isSubmitting || isTransitionPending ? "Submitting..." : "Submit & Get Help"}
                   </Button>
                 )}
               </CardFooter>

@@ -14,7 +14,7 @@ export default function UnauthorizedPage() {
     const role = session?.user?.role;
 
     if (role === "ADMIN") router.replace("/admin");
-    else if (role === "CUSTOMER_EXPERIENCE") router.replace("/staff");
+    else if (role === "STAFF") router.replace("/staff");
     else router.replace("/user/dashboard");
   }, [session, status, router]);
 
