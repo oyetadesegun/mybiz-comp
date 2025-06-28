@@ -81,7 +81,6 @@ export default function GetHelpPage() {
     formState: { errors, isSubmitting },
   } = useForm<HelpFormType>({
     resolver: zodResolver(helpFormSchema),
-    mode: "onBlur",
   })
 
   const [isTransitionPending, transition] = useTransition()
@@ -282,7 +281,7 @@ export default function GetHelpPage() {
                   </div>
                   <div className="relative">
                     <RequiredLabel>
-                      How much are you willing to pay?
+                      How much can you Pay to have this issue fixed?
                       <span className="ml-1 relative top-[2px] text-xs bottom-2 text-gray-600">Provide a budget for the service you need."</span>
                     </RequiredLabel>
                     <InputField
@@ -350,23 +349,26 @@ export default function GetHelpPage() {
                 </div>
               </CardContent>
 
-              <CardFooter>
-                {step === 1 ? (
-                  <Button
-                    type="button"
-                    onClick={handleNextStep}
-                    className="w-full bg-blue-600 h-12 mt-8 hover:bg-blue-700 text-white"
-                    disabled={isSubmitting}
-                  >
-                    Continue
-                  </Button>
-                ) : (
+              <div>
+                {step === 2 && (
                   <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white h-12 mt-4" disabled={isSubmitting}>
                     {isSubmitting || isTransitionPending ? "Submitting..." : "Submit & Get Help"}
                   </Button>
                 )}
-              </CardFooter>
+              </div>
             </form>
+            {
+              step === 1 && (
+                <Button
+                  type="button"
+                  onClick={handleNextStep}
+                  className="w-full bg-blue-600 h-12 mt-8 hover:bg-blue-700 text-white"
+                  disabled={isSubmitting}
+                >
+                  Continue
+                </Button>
+              )
+            }
           </Card>
 
           {step === 1 && (
