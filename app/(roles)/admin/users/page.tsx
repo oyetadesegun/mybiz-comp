@@ -49,7 +49,7 @@ export default function UsersPage() {
         </h1>
         <Dialog open={isCreateUserOpen} onOpenChange={setIsCreateUserOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-red-600 hover:bg-red-700 text-white">
+            <Button className="bg-red-600 hover:bg-red-700 text-white mb-4">
               <UserPlus className="mr-2 h-4 w-4" />
               Create User
             </Button>
