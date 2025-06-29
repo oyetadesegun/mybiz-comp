@@ -1,1 +1,0 @@
-import 'seeds/mock-data-seed.ts'

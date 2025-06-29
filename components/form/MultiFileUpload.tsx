@@ -243,7 +243,7 @@ export default function MultiFileUpload<T extends FieldValues>({
                     %
                   </span>
                 ) : null}
-                <div className="h-[20px] px-2 flex items-center items-center border border-[#CDD3D8]">
+                <div className="h-[20px] px-2 flex items-center border border-[#CDD3D8]">
                   <span className="text-[11px] text-[#242634]">
                     {displayInfo.size}
                   </span>
@@ -284,7 +284,7 @@ export default function MultiFileUpload<T extends FieldValues>({
         <label
           htmlFor={fieldName}
           className={cn(
-            `${error && 'border-red-500'} flex flex-col mb-4 h-[170px] border-dashed-line-item border border-dashed relative rounded-[8px] cursor-pointer p-4 flex items-center justify-center mt-3 w-full`,
+            `${error && 'border-red-500'} flex-col mb-4 h-[170px] border-dashed-line-item border border-dashed relative rounded-[8px] cursor-pointer p-4 flex items-center justify-center mt-3 w-full`,
             className,
           )}
         >
