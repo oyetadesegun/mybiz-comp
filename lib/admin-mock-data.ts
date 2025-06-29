@@ -2,68 +2,6 @@ import {
   Users, DollarSign, AlertCircle, Clock, FileText, TrendingUp, UserPlus, Settings, Bell, Activity, CheckCircle
 } from "lucide-react"
 
-export const mockUsers = [
-  {
-    id: "1",
-    name: "John Admin",
-    email: "john@mybiz.com",
-    role: "admin",
-    roleColor: "bg-red-100 text-red-800",
-    status: "active",
-    lastActive: "2 hours ago",
-    avatar: "/placeholder.svg?height=32&width=32",
-  },
-  {
-    id: "2",
-    name: "Sarah Johnson",
-    email: "sarah@mybiz.com",
-    role: "cx",
-    roleColor: "bg-blue-100 text-blue-800",
-    status: "active",
-    lastActive: "1 hour ago",
-    avatar: "/placeholder.svg?height=32&width=32",
-  },
-  {
-    id: "3",
-    name: "Michael Chen",
-    email: "michael@mybiz.com",
-    role: "agent",
-    roleColor: "bg-green-100 text-green-800",
-    status: "active",
-    lastActive: "30 minutes ago",
-    avatar: "/placeholder.svg?height=32&width=32",
-  },
-  {
-    id: "4",
-    name: "Emily Rodriguez",
-    email: "emily@mybiz.com",
-    role: "auditor",
-    roleColor: "bg-purple-100 text-purple-800",
-    status: "active",
-    lastActive: "4 hours ago",
-    avatar: "/placeholder.svg?height=32&width=32",
-  },
-  {
-    id: "5",
-    name: "David Kim",
-    email: "david@mybiz.com",
-    role: "finance",
-    roleColor: "bg-yellow-100 text-yellow-800",
-    status: "active",
-    lastActive: "1 day ago",
-    avatar: "/placeholder.svg?height=32&width=32",
-  },
-  {
-    id: "6",
-    name: "Maria Garcia",
-    email: "maria@mybiz.com",
-    role: "service-provider",
-    roleColor: "bg-indigo-100 text-indigo-800",
-    status: "active",
-    lastActive: "3 hours ago",
-    avatar: "/placeholder.svg?height=32&width=32",
-  },
-]
 
 export const mockSystemStats = [
   { title: "Total Users", value: "1,234", change: "+12% from last month", icon: Users },

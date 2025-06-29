@@ -10,14 +10,26 @@ export async function getUserByEmail(email: string) {
   return user
 }
 
-export async function createUser(user: { email: string, name?: string, password?: string }) {
+export async function createUser(user: { email: string, name?: string, password?: string, avatar?: string }) {
   const newUser = await prisma.user.create({
     data: {
       email: user.email,
       name: user.name,
-      password: user.password
+      password: user.password,
+      avatar: user.avatar
     }
   })
 
   return newUser
 }
+
+export async function updateLastLoggedIn(userId: string) {
+  await prisma.user.update({
+    where: {
+      id: userId
+    },
+    data: {
+      lastLoggedIn: new Date()
+    }
+  })
+} 

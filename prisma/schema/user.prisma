@@ -1,14 +1,17 @@
 model User {
-  id       String   @id @default(uuid())
-  email    String   @unique
+  id       String     @id @default(uuid())
+  email    String     @unique
   name     String?
-  role     Role     @default(USER)
+  role     Role       @default(USER)
   password String?
   profile  Profile?
+  status   UserStatus @default(active)
+  avatar   String?
 
   // Add these back-relations for Response
   staffResponses    Response[] @relation("StaffResponses")
   customerResponses Response[] @relation("CustomerResponses")
+  lastLoggedIn      DateTime   @default(now())
 }
 
 model Profile {
@@ -23,4 +26,9 @@ enum Role {
   USER
   ADMIN
   STAFF
+}
+
+enum UserStatus {
+  active
+  inactive
 }
