@@ -1,7 +1,7 @@
-// pages/admin/users.jsx
+// app/admin/users/page.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -25,14 +25,40 @@ import {
 import { Label } from "@/components/ui/label";
 import { UserPlus, Search, Edit, Eye, Trash2, Shield } from "lucide-react";
 import { mockUsers } from "@/lib/admin-mock-data";
+import axios from "axios";
 
+type User ={
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+}
 export default function UsersPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [roleFilter, setRoleFilter] = useState("all");
   const [isCreateUserOpen, setIsCreateUserOpen] = useState(false);
+   const [users, setUsers] = useState<User[]>([])
   const [selectedUser, setSelectedUser] = useState(null); // Keep if you plan an edit user dialog
+const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
 
-  const filteredUsers = mockUsers.filter((user) => {
+useEffect(()=>{
+  const fetchUsers = async ()=> {
+    setLoading(true)
+    try {
+      const response = await axios.get("/api/admin");
+       console.log("API response:", response.data)
+      setUsers(response.data)
+  }catch(err){
+    console.error("Failed to fetch users:", err)
+    setError("Could not load users")
+  }finally{
+    setLoading(false)
+  }
+}
+  fetchUsers()
+}, [])
+  const filteredUsers = users.filter((user) => {
     const query = (searchTerm ?? "").toLowerCase();
     const name = (user.name ?? "").toLowerCase();
     const email = (user.email ?? "").toLowerCase();
