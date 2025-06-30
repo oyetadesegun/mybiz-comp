@@ -1,7 +1,7 @@
 // app/admin/users/page.tsx
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -25,17 +25,21 @@ import {
 import { Label } from "@/components/ui/label";
 import { UserPlus, Search, Edit, Eye, Trash2, Shield } from "lucide-react";
 
-import { User } from "@prisma/client";
+import { User, UserStatus } from "@prisma/client";
 import { formatDate } from "@/services/TimeService";
-
+import Pagination from "./Pagination";
+import Link from "next/link";
 
 export default function UsersList({ users }: { users: Partial<User>[] }) {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [roleFilter, setRoleFilter] = useState("all");
   const [isCreateUserOpen, setIsCreateUserOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
-
+  
+  
   const filteredUsers = users.filter((user) => {
     const query = (searchTerm ?? "").toLowerCase();
     const name = (user.name ?? "").toLowerCase();
@@ -44,9 +48,14 @@ export default function UsersList({ users }: { users: Partial<User>[] }) {
     const matchesRole = roleFilter === "all" || user.role === roleFilter;
     return matchesSearch && matchesRole;
   });
+  
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedUsers = filteredUsers.slice(startIndex, endIndex);
 
   return (
     <>
+    
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold tracking-tight text-gray-900">
           User Management
@@ -133,13 +142,13 @@ export default function UsersList({ users }: { users: Partial<User>[] }) {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All Roles</SelectItem>
-            <SelectItem value="admin">Admin</SelectItem>
+            <SelectItem value="ADMIN">Admin</SelectItem>
             <SelectItem value="cx">CX Representative</SelectItem>
-            <SelectItem value="agent">Agent</SelectItem>
+            <SelectItem value="STAFF">Staff</SelectItem>
             <SelectItem value="auditor">Auditor</SelectItem>
             <SelectItem value="finance">Finance</SelectItem>
             <SelectItem value="service-provider">Service Provider</SelectItem>
-            <SelectItem value="client">Client</SelectItem>
+            <SelectItem value="USER">User</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -159,7 +168,7 @@ export default function UsersList({ users }: { users: Partial<User>[] }) {
                 </tr>
               </thead>
               <tbody>
-                {filteredUsers.map((user) => (
+                {paginatedUsers.map((user) => (
                   <tr key={user.id} className="border-b">
                     <td className="p-4">
                       <div className="flex items-center space-x-3">
@@ -183,9 +192,9 @@ export default function UsersList({ users }: { users: Partial<User>[] }) {
                     </td>
                     <td className="p-4">
                       <Badge
-                        variant={user.status === "active" ? "default" : "secondary"}
+                        variant={user.status === UserStatus.active ? "default" : "secondary"}
                         className={
-                          user.status === "active"
+                          user.status === UserStatus.active
                             ? "bg-green-100 text-green-800"
                             : "bg-gray-100 text-gray-800"
                         }
@@ -206,7 +215,7 @@ export default function UsersList({ users }: { users: Partial<User>[] }) {
                     <td className="p-4">
                       <div className="flex space-x-2">
                         <Button size="sm" variant="outline">
-                          <Edit className="h-3 w-3" />
+                        <Link href={`/admin/users/${user.id}`}> <Edit className="h-3 w-3" /></Link> 
                         </Button>
                         <Button size="sm" variant="outline">
                           <Eye className="h-3 w-3" />
@@ -227,6 +236,8 @@ export default function UsersList({ users }: { users: Partial<User>[] }) {
           </div>
         </CardContent>
       </Card>
+                <Pagination data={filteredUsers}/>
+
     </>
   );
 }

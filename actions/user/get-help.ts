@@ -1,6 +1,6 @@
 'use server'
 
-import prisma from "@/prisma/client/client";
+import prisma from "@/prisma/client";
 import { helpFormSchema, HelpFormType } from "@/validations/get-help-validation";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";

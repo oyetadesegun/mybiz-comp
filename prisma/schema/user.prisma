@@ -1,25 +1,23 @@
 model User {
-  id       String     @id @default(uuid())
-  email    String     @unique
-  name     String?
-  role     Role       @default(USER)
-  password String?
-  profile  Profile?
-  status   UserStatus @default(active)
-  avatar   String?
-
-  // Add these back-relations for Response
-  staffResponses    Response[] @relation("StaffResponses")
-  customerResponses Response[] @relation("CustomerResponses")
+  id                String     @id @default(uuid())
+  email             String     @unique
+  name              String?
+  role              Role       @default(USER)
+  password          String?
+  avatar            String?
   lastLoggedIn      DateTime   @default(now())
+  status            UserStatus @default(active)
+  profile           Profile?
+  customerResponses Response[] @relation("CustomerResponses")
+  staffResponses    Response[] @relation("StaffResponses")
 }
 
 model Profile {
   id        String            @id @default(uuid())
   bio       String
-  user      User              @relation(fields: [userId], references: [id])
   userId    String            @unique
   questions GetHelpQuestion[]
+  user      User              @relation(fields: [userId], references: [id])
 }
 
 enum Role {

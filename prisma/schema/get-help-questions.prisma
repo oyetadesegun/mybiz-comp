@@ -1,8 +1,6 @@
 model GetHelpQuestion {
-  id        String   @id @default(uuid())
-  profileId String?
-  Profile   Profile? @relation(fields: [profileId], references: [id])
-
+  id                String             @id @default(uuid())
+  profileId         String?
   title             String
   businessName      String
   businessType      String
@@ -18,13 +16,12 @@ model GetHelpQuestion {
   instagramUrl      String?
   twitterUrl        String?
   facebookUrl       String?
-  status            Status     @default(pending)
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  status            Status             @default(pending)
+  documents         DocumentMetaData[]
+  Profile           Profile?           @relation(fields: [profileId], references: [id])
   responses         Response[]
-
-  documents DocumentMetaData[] // one-to-many relationship to reusable Document model
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 enum Status {

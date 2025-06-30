@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import Link from 'next/link'
-import prisma from '@/prisma/client/client'
+import prisma from '@/prisma/client'
 
 export default async function Issues() {
   const issues = await prisma.getHelpQuestion.findMany({

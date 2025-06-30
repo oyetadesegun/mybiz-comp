@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { CheckCircle, DollarSign, MessageSquare, Phone, Star } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
-import prisma from '@/prisma/client/client'
+import prisma from '@/prisma/client'
 export default function DashBoardOverview() {
 const  issueCount = prisma.getHelpQuestion.count()
   return (

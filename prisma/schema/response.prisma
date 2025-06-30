@@ -1,19 +1,15 @@
 model Response {
-  id        String   @id @default(uuid())
-  content   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  question   GetHelpQuestion @relation(fields: [questionId], references: [id])
-  questionId String
-
-  staff   User   @relation("StaffResponses", fields: [staffId], references: [id])
-  staffId String
-
-  customer   User   @relation("CustomerResponses", fields: [customerId], references: [id])
-  customerId String
-
+  id           String          @id @default(uuid())
+  content      String
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  questionId   String
+  staffId      String
+  customerId   String
   responseType ResponseType?
+  customer     User            @relation("CustomerResponses", fields: [customerId], references: [id])
+  question     GetHelpQuestion @relation(fields: [questionId], references: [id])
+  staff        User            @relation("StaffResponses", fields: [staffId], references: [id])
 
   @@index([questionId])
   @@index([staffId])
