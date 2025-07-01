@@ -25,10 +25,11 @@ import {
 import { Label } from "@/components/ui/label";
 import { UserPlus, Search, Edit, Eye, Trash2, Shield } from "lucide-react";
 
-import { User, UserStatus } from "@prisma/client";
+import { User } from "@prisma/client";
 import { formatDate } from "@/services/TimeService";
 import Pagination from "./Pagination";
 import Link from "next/link";
+import DeleteButton from "./DeleteButton";
 
 export default function UsersList({ users }: { users: Partial<User>[] }) {
 
@@ -55,7 +56,6 @@ export default function UsersList({ users }: { users: Partial<User>[] }) {
 
   return (
     <>
-    
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold tracking-tight text-gray-900">
           User Management
@@ -192,9 +192,9 @@ export default function UsersList({ users }: { users: Partial<User>[] }) {
                     </td>
                     <td className="p-4">
                       <Badge
-                        variant={user.status === UserStatus.active ? "default" : "secondary"}
+                        variant={user.status === "active" ? "default" : "secondary"}
                         className={
-                          user.status === UserStatus.active
+                          user.status === "active"
                             ? "bg-green-100 text-green-800"
                             : "bg-gray-100 text-gray-800"
                         }
@@ -224,8 +224,9 @@ export default function UsersList({ users }: { users: Partial<User>[] }) {
                           size="sm"
                           variant="outline"
                           className="text-red-600 hover:text-red-700"
-                        >
+                        ><DeleteButton id={user.id || ""}>
                           <Trash2 className="h-3 w-3" />
+                        </DeleteButton>
                         </Button>
                       </div>
                     </td>
