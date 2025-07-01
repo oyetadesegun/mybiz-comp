@@ -3,8 +3,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { CheckCircle, DollarSign, MessageSquare, Phone, Star } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
-
+import prisma from '@/prisma/client'
 export default function DashBoardOverview() {
+const  issueCount = prisma.getHelpQuestion.count()
   return (
     <div className=''>
       <div className="flex items-center justify-between">
@@ -12,16 +13,19 @@ export default function DashBoardOverview() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Issues Submitted</CardTitle>
-            <MessageSquare className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">3</div>
-            <p className="text-xs text-muted-foreground">+1 from last month</p>
-          </CardContent>
-        </Card>
+        <Link href="dashboard/issues">
+  <Card className="cursor-pointer hover:shadow-lg transition">
+    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+      <CardTitle className="text-sm font-medium">Total Issues Submitted</CardTitle>
+      <MessageSquare className="h-4 w-4 text-muted-foreground" />
+    </CardHeader>
+    <CardContent>
+      <div className="text-2xl font-bold">{issueCount}</div>
+      <p className="text-xs text-muted-foreground">+1 from last month</p>
+    </CardContent>
+  </Card>
+</Link>
+
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Resolved Issues</CardTitle>

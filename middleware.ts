@@ -1,29 +1,3 @@
-// import { auth } from "@/auth";
-// import { NextResponse } from "next/server";
-// import type { NextRequest } from "next/server";
-
-// export async function middleware(req: NextRequest) {
-//   const session = await auth();
-//   console.log(session, "here")
-//   // If no session, redirect to login
-//   if (!session) {
-//     const loginUrl = new URL("/login", req.url);
-//     return NextResponse.redirect(loginUrl);
-//   }
-
-//   if (session.user?.email)
-//     return NextResponse.next();
-// }
-
-// export const config = {
-//   // *: zero or more
-//   // +: one or more
-//   // ? : zero or one
-//   matcher: [
-//     '/users/:userId*',
-//     '/dashboard'],
-// }
-
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
