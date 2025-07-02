@@ -1,8 +1,9 @@
+import prisma from "@/prisma/client"
 import {
   Users, DollarSign, AlertCircle, Clock, FileText, TrendingUp, UserPlus, Settings, Bell, Activity, CheckCircle
 } from "lucide-react"
 
-
+prisma
 export const mockSystemStats = [
   { title: "Total Users", value: "1,234", change: "+12% from last month", icon: Users },
   { title: "Monthly Revenue", value: "$45,231", change: "+8% from last month", icon: DollarSign },
@@ -12,12 +13,13 @@ export const mockSystemStats = [
 
 export const mockKPIs = [
   {
-    title: "Customer Satisfaction",
+    title: "Total Issues",
     value: "4.8/5",
     change: "+0.2 this month",
     icon: Users,
     color: "text-green-600",
     changeColor: "text-green-600",
+    link: "/admin/issues"
   },
   {
     title: "Revenue Growth",
@@ -26,6 +28,7 @@ export const mockKPIs = [
     icon: TrendingUp,
     color: "text-blue-600",
     changeColor: "text-blue-600",
+    link: "/admin/issues"
   },
   {
     title: "Service Completion",
@@ -34,6 +37,7 @@ export const mockKPIs = [
     icon: CheckCircle,
     color: "text-green-600",
     changeColor: "text-green-600",
+    link: "/admin/issues"
   },
   {
     title: "System Reliability",
@@ -42,6 +46,7 @@ export const mockKPIs = [
     icon: Activity,
     color: "text-purple-600",
     changeColor: "text-purple-600",
+    link: "/admin/issues"
   },
 ]
 

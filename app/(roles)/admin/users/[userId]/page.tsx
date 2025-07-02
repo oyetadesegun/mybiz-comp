@@ -10,39 +10,21 @@ import {
 } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
 import { Save, ArrowLeft } from "lucide-react"
-import prisma from "@/prisma/client";
-import { Role, UserStatus } from "@prisma/client";
+
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link"
+import {findUserById,  UpdateUser } from "@/actions/admin/admin.user.actions"
 
 export default async function EditUserPage({params}: {params:{userId:string}}){
-    // Fetch user data directly in the server component
-    const user = await prisma.user.findUnique({
-        where: {id: params.userId}
-    })
-    if(!user){
-        notFound()
-    }
-
+    // Fetch user data 
+  const user=  await findUserById(params.userId)
   // Server action for form submission
-  async function updateUser(formData:FormData) {
-     'use server'
-    try {
-        await prisma.user.update({
-            where: {id: params.userId},
-            data: {
-                name: formData.get('name') as string,
-                email:formData.get('email') as string,
-                role: formData.get('role') as Role,
-                status: formData.get('status') as UserStatus,
-                avatar: formData.get('avatar') as string
-            }
-        })
-    } catch (error) {
-        throw new Error('Failed to update user')
-    }
+  async function updateUser(formData: FormData){
+    'use server'
+    await UpdateUser(formData, params.userId);
     redirect('/admin/users')
-}
+  }
+
 return (
     <div className="container mx-auto py-8">
       <div className="flex items-center justify-between mb-6">

@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Download } from "lucide-react";
 import { mockRecentActivity, mockKPIs } from "@/lib/admin-mock-data";
+import Link from "next/link";
 
 export default function OverviewPage() {
   return (
@@ -13,7 +14,7 @@ export default function OverviewPage() {
         <h1 className="text-2xl font-bold tracking-tight text-gray-900">
           System Overview & KPIs
         </h1>
-        <Button className="bg-red-600 hover:bg-red-700 text-white">
+        <Button className="bg-red-600 hover:bg-red-700 text-white mb-2">
           <Download className="mr-2 h-4 w-4" />
           Export Report
         </Button>
@@ -21,6 +22,7 @@ export default function OverviewPage() {
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-10">
         {mockKPIs.map((kpi, index) => (
+          <Link href={kpi.link}>
           <Card key={index}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">{kpi.title}</CardTitle>
@@ -31,6 +33,7 @@ export default function OverviewPage() {
               <p className={`text-xs ${kpi.changeColor}`}>{kpi.change}</p>
             </CardContent>
           </Card>
+          </Link>
         ))}
       </div>
 
