@@ -1,5 +1,5 @@
 // components/DataTable/QuestionsTable.tsx
-"use client";
+"use client"
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -10,11 +10,10 @@ import { Search, Eye, UserPlus, Edit, Trash2 } from "lucide-react";
 import Link from "next/link";
 import Pagination from "../Pagination";
 import { formatDate } from "@/services/TimeService";
-import { GetHelpQuestion } from "@prisma/client";
-import { findUserByEmail } from "@/actions/admin/admin.user.actions";
+import { GetHelpQuestion, User } from "@prisma/client";
 
 
-export async function QuestionsTable({ questions }: {questions:GetHelpQuestion[]}) {
+export default  function QuestionsTable({ questions, users }: {questions:GetHelpQuestion[], users: User[]}) {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [businessTypeFilter, setBusinessTypeFilter] = useState("all");
@@ -120,12 +119,12 @@ export async function QuestionsTable({ questions }: {questions:GetHelpQuestion[]
                 </tr>
               </thead>
               <tbody>
-                {paginatedQuestions.map((question) => {
-                const user = async findUserByEmail(question.emailAddress)
+                {paginatedQuestions.map( (question) => {
+               
 
                   return(<tr key={question.id} className="border-b">
                     <td className="p-4 font-medium">
-                      <Link href={`/admin/questions/${question.id}`}>
+                      <Link href={`/admin/questions/${question.id}`} className="cursor-pointer hover:text-blue-500">
                       {question.title}
                           </Link>
                           </td>
@@ -139,10 +138,17 @@ export async function QuestionsTable({ questions }: {questions:GetHelpQuestion[]
                     <td className="p-4 max-w-[200px] truncate">{question.businessChallenge}</td>
                     <td className="p-4">
                       <div>
-                        <Link href={`/admin/users/${user.id}`}> //TODO: get user id using email
-                        <p className="font-medium">{question.fullName}</p>
-                        <p className="text-sm text-gray-500">{question.emailAddress}</p>
-                        </Link>
+                        {(() => {
+  const matchingUser = users.find(user => user.email === question.emailAddress);
+
+  return (
+    <Link href={matchingUser ? `/admin/users/${matchingUser.id}` : "#"} className="hover:underline">
+      <p className="font-medium">{question.fullName}</p>
+      <p className="text-sm text-gray-500">{question.emailAddress}</p>
+    </Link>
+  );
+})()}
+
                       </div>
                     </td>
                     <td className="p-4">

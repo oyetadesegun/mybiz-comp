@@ -14,6 +14,7 @@ import { Save, ArrowLeft } from "lucide-react"
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link"
 import {findUserById,  UpdateUser } from "@/actions/admin/admin.user.actions"
+import BackButton from "@/components/BackButton"
 
 export default async function EditUserPage({params}: {params:{userId:string}}){
     // Fetch user data 
@@ -101,12 +102,7 @@ return (
         </div>
 
         <div className="flex justify-end gap-4 pt-6">
-         <Button variant="outline" className="flex items-center gap-2" asChild>
-  <Link href="/admin/users">
-    <ArrowLeft className="h-4 w-4" />
-    Cancel
-  </Link>
-</Button>
+<BackButton/>
           <Button type="submit">
             <Save className="mr-2 h-4 w-4" />
             Save Changes

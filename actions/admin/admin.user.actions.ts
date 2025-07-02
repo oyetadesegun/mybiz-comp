@@ -11,7 +11,10 @@ export async function getAllUsers() {
       name: true,
       email: true,
       role: true,
-      lastLoggedIn: true
+      lastLoggedIn: true,
+      status: true,
+      avatar: true,
+      password: true
     },
   })
 }
