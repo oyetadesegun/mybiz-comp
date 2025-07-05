@@ -33,3 +33,11 @@ export async function updateLastLoggedIn(userId: string) {
     }
   })
 } 
+
+export default async function deleteUser(userId: string){
+  await prisma.user.delete({
+    where:{
+      id: userId
+    }
+  })
+}

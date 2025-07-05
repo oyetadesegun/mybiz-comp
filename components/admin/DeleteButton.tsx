@@ -12,15 +12,15 @@ import {
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { Trash2 } from "lucide-react";
-import prisma from "@/prisma/client";
-import Delete from "./Delete";
+import deleteUser from "@/actions/user/user.actions";
 
 interface DeleteButtonProps {
   id: string;
+  type: string;
   children?: React.ReactNode; // Add children to the props interface
 }
 
-export default function DeleteButton({ id, children }: DeleteButtonProps) {
+export default function DeleteButton({ id,type, children }: DeleteButtonProps) {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
 
@@ -32,13 +32,17 @@ export default function DeleteButton({ id, children }: DeleteButtonProps) {
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the user account.
+              This action cannot be undone. This will permanently delete the {type}  account.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction 
-              onClick={()=>Delete} //TODO: Not working
+              onClick={async () => {
+  await deleteUser(id)
+  setIsDeleteDialogOpen(false)
+  //TODO: there is a foreign key blocker here
+}}
             
               className="bg-red-600 hover:bg-red-700"
             >

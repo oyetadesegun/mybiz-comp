@@ -213,7 +213,7 @@ export default function UsersList({ users }: { users: Partial<User>[] }) {
                           size="sm"
                           variant="outline"
                           className="text-red-600 hover:text-red-700"
-                        ><DeleteButton id={user.id || ""}>
+                        ><DeleteButton id={user.id || ""} type={"user"}>
                           <Trash2 className="h-3 w-3" />
                         </DeleteButton>
                         </Button>

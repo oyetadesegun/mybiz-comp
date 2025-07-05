@@ -1,21 +1,23 @@
-import prisma from "@/prisma/client"
+import { getAllIssues } from "@/actions/admin/admin.issue.actions"
 import {
   Users, DollarSign, AlertCircle, Clock, FileText, TrendingUp, UserPlus, Settings, Bell, Activity, CheckCircle
 } from "lucide-react"
 
-prisma
-export const mockSystemStats = [
+ export default async function AdminDashboardData() {
+const {totalCount,thisMonthCount} = await getAllIssues()
+
+ const mockSystemStats = [
   { title: "Total Users", value: "1,234", change: "+12% from last month", icon: Users },
   { title: "Monthly Revenue", value: "$45,231", change: "+8% from last month", icon: DollarSign },
   { title: "Active Services", value: "89", change: "15 completed today", icon: FileText },
   { title: "System Uptime", value: "99.9%", change: "Last 30 days", icon: TrendingUp },
 ]
 
-export const mockKPIs = [
+ const  mockKPIs = [
   {
     title: "Total Issues",
-    value: "4.8/5",
-    change: "+0.2 this month",
+    value: totalCount.toString(),
+    change: `${thisMonthCount} this month`,
     icon: Users,
     color: "text-green-600",
     changeColor: "text-green-600",
@@ -50,7 +52,7 @@ export const mockKPIs = [
   },
 ]
 
-export const mockRecentActivity = [
+ const mockRecentActivity = [
   { action: "New user registration", timestamp: "2 minutes ago", icon: UserPlus },
   { action: "Service completed", timestamp: "15 minutes ago", icon: FileText },
   { action: "Commission payment processed", timestamp: "1 hour ago", icon: DollarSign },
@@ -61,11 +63,8 @@ export const mockRecentActivity = [
 
 // lib/admin-mock-data.js
 
-import {
 
-} from "lucide-react";
-
-export const mockAllUsers = [
+ const mockAllUsers = [
   {
     id: 1,
     name: "Alice Johnson",
@@ -138,7 +137,7 @@ export const mockAllUsers = [
   },
 ];
 
-export const mockStaffRecentActivity = [
+ const mockStaffRecentActivity = [
   {
     action: "User 'Alice Johnson' logged in.",
     timestamp: "2 hours ago",
@@ -166,7 +165,7 @@ export const mockStaffRecentActivity = [
   },
 ];
 
-export const mockAdminKPIs = [
+ const mockAdminKPIs = [
   {
     title: "Total Users",
     value: "2,450",
@@ -200,3 +199,5 @@ export const mockAdminKPIs = [
     icon: AlertCircle,
   },
 ];
+return {mockKPIs, mockRecentActivity}
+}

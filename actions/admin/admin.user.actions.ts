@@ -16,13 +16,15 @@ export async function getAllUsers() {
       avatar: true,
       password: true
     },
+    
   })
 }
 
     // Fetch user data directly in the server component
     export  async function findUserById(userId: string){
     const user = await prisma.user.findUnique({
-        where: {id: userId}
+        where: {id: userId},
+        
     })
     if(!user){
         notFound()

@@ -7,11 +7,11 @@ import { Suspense } from "react"
 
 
 export default async function IssueListPage() {
-  const issues = await getAllIssues();
+  const {allIssues} = await getAllIssues();
   const usersList = await getAllUsers();
   return (
         <Suspense fallback={<LoadingIconLarge />}>
-        <QuestionsTable questions={issues} users={usersList}/>
+        <QuestionsTable questions={allIssues} users={usersList}/>
     </Suspense>
   );
 }

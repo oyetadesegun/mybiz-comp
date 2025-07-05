@@ -124,7 +124,7 @@ export default  function QuestionsTable({ questions, users }: {questions:GetHelp
 
                   return(<tr key={question.id} className="border-b">
                     <td className="p-4 font-medium">
-                      <Link href={`/admin/questions/${question.id}`} className="cursor-pointer hover:text-blue-500">
+                      <Link href={`/admin/issues/${question.id}`} className="cursor-pointer hover:text-blue-500">
                       {question.title}
                           </Link>
                           </td>

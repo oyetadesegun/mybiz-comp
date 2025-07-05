@@ -28,6 +28,8 @@ const businessTypeOptions = [
   { value: "accounting-firm", label: "Accounting Firm" },
   { value: "business-consulting", label: "Business Consulting" },
   { value: "ecommerce-store", label: "E-commerce Store" },
+  { value: "digital-product", label: "Digital Product" },
+  { value: "physical-product", label: "Physical Product" },
   { value: "restaurant", label: "Restaurant" },
   { value: "saas-startup", label: "SaaS Startup" },
   { value: "digital-marketing", label: "Digital Marketing Agency" },
@@ -340,7 +342,7 @@ export default function GetHelpPage() {
                       <Phone className="h-5 w-5 text-blue-600 mt-0.5" />
                       <div>
                         <h4 className="font-semibold text-blue-900">What happens next?</h4>
-                        <p className="text-sm text-blue-800 mt-1">
+                        <p className="text-sm text-blue-800 mt-1 mb-2">
                           Our team will call you to understand your specific needs and help create your account.
                         </p>
                       </div>
