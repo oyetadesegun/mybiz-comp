@@ -4,14 +4,15 @@ import prisma from "@/prisma/client";
 import { helpFormSchema, HelpFormType } from "@/validations/get-help-validation";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
+import { createUser } from "./user.actions";
 
 export async function createNewHelpForm(
-  
+
   prevState: { errors: Partial<Record<keyof HelpFormType, string[]>> } | undefined,
   formData: FormData
 ) {
   const session = await auth();
-  console.log("this =>",session?.user.email)
+  console.log("this =>", session?.user.email)
 
   const rawData = Object.fromEntries(formData.entries());
 
@@ -49,20 +50,23 @@ export async function createNewHelpForm(
 
   const payload = parsed.data;
 
-  // Try to get profileId if user is authenticated
-  let profileId: string | null = null;
-  if (session?.user?.email) {
-    const user = await prisma.user.findUnique({
-      where: { email: session.user.email },
-      include: { profile: true },
-    });
-
-    profileId = user?.profile?.id ?? null;
+  let userId: string | null = null
+  const existingUser = await prisma.user.findFirst({
+    where: {
+      email: payload.emailAddress
+    }
+  })
+  console.log(existingUser)
+  if (existingUser) {
+    userId = existingUser.id
+  } else {
+    const newUser = await createUser({ email: payload.emailAddress, name: payload.fullName, status: "inactive", })
+    userId = newUser.id
   }
 
   await prisma.getHelpQuestion.create({
     data: {
-      profileId: session?.user.id,
+      userId: userId,
       emailAddress: payload.emailAddress,
       title: payload.title,
       businessName: payload.businessName,
@@ -80,12 +84,12 @@ export async function createNewHelpForm(
       facebookUrl: payload.facebookUrl,
       documents: payload.documents && payload.documents.length > 0
         ? {
-            create: payload.documents.map(doc => ({
-              name: doc.name,
-              size: doc.size,
-              url: doc.url
-            }))
-          }
+          create: payload.documents.map(doc => ({
+            name: doc.name,
+            size: doc.size,
+            url: doc.url
+          }))
+        }
         : undefined
     }
   });

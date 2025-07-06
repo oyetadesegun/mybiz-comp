@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Search, Eye, UserPlus, Edit, Trash2 } from "lucide-react";
 import Link from "next/link";
 import Pagination from "../Pagination";
@@ -13,7 +13,7 @@ import { formatDate } from "@/services/TimeService";
 import { GetHelpQuestion, User } from "@prisma/client";
 
 
-export default  function QuestionsTable({ questions, users }: {questions:GetHelpQuestion[], users: User[]}) {
+export default function QuestionsTable({ questions, users }: { questions: GetHelpQuestion[], users: User[] }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [businessTypeFilter, setBusinessTypeFilter] = useState("all");
@@ -24,7 +24,7 @@ export default  function QuestionsTable({ questions, users }: {questions:GetHelp
 
   const filteredQuestions = questions.filter((question) => {
     // Search across multiple fields
-    const matchesSearch = searchTerm === "" || 
+    const matchesSearch = searchTerm === "" ||
       [
         question.title,
         question.businessName,
@@ -32,7 +32,7 @@ export default  function QuestionsTable({ questions, users }: {questions:GetHelp
         question.fullName,
         question.emailAddress
       ].some(field => field?.toLowerCase().includes(searchTerm.toLowerCase()));
-    
+
     // Apply filters
     const matchesStatus = statusFilter === "all" || question.status === statusFilter;
     const matchesBusinessType = businessTypeFilter === "all" || question.businessType === businessTypeFilter;
@@ -119,15 +119,15 @@ export default  function QuestionsTable({ questions, users }: {questions:GetHelp
                 </tr>
               </thead>
               <tbody>
-                {paginatedQuestions.map( (question) => {
-               
+                {paginatedQuestions.map((question) => {
 
-                  return(<tr key={question.id} className="border-b">
+
+                  return (<tr key={question.id} className="border-b">
                     <td className="p-4 font-medium">
                       <Link href={`/admin/issues/${question.id}`} className="cursor-pointer hover:text-blue-500">
-                      {question.title}
-                          </Link>
-                          </td>
+                        {question.title}
+                      </Link>
+                    </td>
                     <td className="p-4">
                       <div>
                         <p className="font-medium">{question.businessName}</p>
@@ -139,32 +139,32 @@ export default  function QuestionsTable({ questions, users }: {questions:GetHelp
                     <td className="p-4">
                       <div>
                         {(() => {
-  const matchingUser = users.find(user => user.email === question.emailAddress);
+                          const matchingUser = users.find(user => user.email === question.emailAddress);
 
-  return (
-    <Link href={matchingUser ? `/admin/users/${matchingUser.id}` : "#"} className="hover:underline">
-      <p className="font-medium">{question.fullName}</p>
-      <p className="text-sm text-gray-500">{question.emailAddress}</p>
-    </Link>
-  );
-})()}
+                          return (
+                            <Link href={matchingUser ? `/admin/users/${matchingUser.id}` : "#"} className="hover:underline">
+                              <p className="font-medium">{question.fullName}</p>
+                              <p className="text-sm text-gray-500">{question.emailAddress}</p>
+                            </Link>
+                          );
+                        })()}
 
                       </div>
                     </td>
                     <td className="p-4">
                       <Badge
                         variant={
-                          question.status === "resolved" 
-                            ? "default" 
-                            : question.status === "in_progress" 
-                              ? "secondary" 
+                          question.status === "resolved"
+                            ? "default"
+                            : question.status === "in_progress"
+                              ? "secondary"
                               : "outline"
                         }
                         className={
-                          question.status === "resolved" 
-                            ? "bg-green-100 text-green-800" 
-                            : question.status === "in_progress" 
-                              ? "bg-blue-100 text-blue-800" 
+                          question.status === "resolved"
+                            ? "bg-green-100 text-green-800"
+                            : question.status === "in_progress"
+                              ? "bg-blue-100 text-blue-800"
                               : "bg-gray-100 text-gray-800"
                         }
                       >
@@ -175,10 +175,10 @@ export default  function QuestionsTable({ questions, users }: {questions:GetHelp
                       <Badge
                         variant="outline"
                         className={
-                          question.urgencyLevel === "high" 
-                            ? "bg-red-100 text-red-800" 
-                            : question.urgencyLevel === "medium" 
-                              ? "bg-yellow-100 text-yellow-800" 
+                          question.urgencyLevel === "high"
+                            ? "bg-red-100 text-red-800"
+                            : question.urgencyLevel === "medium"
+                              ? "bg-yellow-100 text-yellow-800"
                               : "bg-gray-100 text-gray-800"
                         }
                       >
@@ -190,7 +190,7 @@ export default  function QuestionsTable({ questions, users }: {questions:GetHelp
                     </td>
                     <td className="p-4">
                       <div className="flex space-x-2">
-                      
+
                         <Button size="sm" variant="outline">
                           <Edit className="h-3 w-3" />
                         </Button>
@@ -203,15 +203,16 @@ export default  function QuestionsTable({ questions, users }: {questions:GetHelp
                         </Button>
                       </div>
                     </td>
-                  </tr>)}
+                  </tr>)
+                }
                 )}
               </tbody>
             </table>
           </div>
         </CardContent>
       </Card>
-      
-      <Pagination data={filteredQuestions}/>
+
+      <Pagination data={filteredQuestions} />
     </>
   )
 }

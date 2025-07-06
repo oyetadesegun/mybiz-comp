@@ -1,7 +1,7 @@
 'use server'
 
 import prisma from "@/prisma/client";
-import { User } from "@prisma/client";
+import { User, UserStatus } from "@prisma/client";
 
 export async function getUserByEmail(email: string) {
   const user = await prisma.user.findUnique({
@@ -10,13 +10,14 @@ export async function getUserByEmail(email: string) {
   return user
 }
 
-export async function createUser(user: { email: string, name?: string, password?: string, avatar?: string }) {
+export async function createUser(user: { email: string, name?: string, password?: string, avatar?: string, status?: UserStatus }) {
   const newUser = await prisma.user.create({
     data: {
       email: user.email,
       name: user.name,
       password: user.password,
-      avatar: user.avatar
+      avatar: user.avatar || '/placeholder-user.jpg',
+      status: user.status
     }
   })
 
@@ -32,11 +33,11 @@ export async function updateLastLoggedIn(userId: string) {
       lastLoggedIn: new Date()
     }
   })
-} 
+}
 
-export default async function deleteUser(userId: string){
+export default async function deleteUser(userId: string) {
   await prisma.user.delete({
-    where:{
+    where: {
       id: userId
     }
   })
