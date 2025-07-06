@@ -1,5 +1,5 @@
 "use client"
-
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
@@ -32,13 +32,16 @@ import {
   AlertCircle,
   Circle,
 } from "lucide-react"
+import { Status,Role  , UserStatus, Response} from "@prisma/client"
+import { UpdateUser } from "@/actions/admin/admin.user.actions"
 
-type UserStatus = "active" | "inactive"
-type Role = "USER" | "ADMIN" | "STAFF"
-type IssueStatus = "open" | "in_progress" | "resolved"
+// type UserStatus = UserStatus
+// type Role = pRole
+// type IssueStatus = Status
 
 interface UserProfile {
   id: string
+  issueId: string  // 👈 this is required
   email: string
   name: string | null
   role: Role
@@ -52,16 +55,17 @@ interface UserProfile {
   } | null
   customerResponses: Array<{
     id: string
-    issueId: string
+    questionId: string
     content: string
     createdAt: Date
-    issue: {
+    question: {
       id: string
       title: string
-      status: IssueStatus
+      status: Status
       chatCount: number
       createdAt: Date
       updatedAt: Date
+      staffResponses: Response[]
     }
   }>
 }
@@ -79,30 +83,32 @@ export function UserProfilePage({ user }: UserProfilePageProps) {
     status: user.status,
     bio: user.profile?.bio || "",
   })
+  const router = useRouter()
 
-  const getStatusIcon = (status: IssueStatus) => {
+  const getStatusIcon = (status: Status) => {
     switch (status) {
-      case "open":
+      case Status.pending:
         return <Circle className="h-4 w-4 text-red-500" />
-      case "in_progress":
+      case Status.in_progress:
         return <Clock className="h-4 w-4 text-yellow-500" />
-      case "resolved":
+      case Status.resolved:
         return <CheckCircle className="h-4 w-4 text-green-500" />
       default:
         return <AlertCircle className="h-4 w-4 text-gray-500" />
     }
   }
 
-  const getStatusBadge = (status: IssueStatus) => {
+  const getStatusBadge = (status: Status) => {
     const variants = {
-      open: "destructive",
+      pending: "destructive",
       in_progress: "default",
       resolved: "secondary",
+       closed: "secondary", // ← Add all valid statuses
     } as const
 
     return (
       <Badge variant={variants[status]} className="capitalize">
-        {status.replace("_", " ")}
+        {status.replace("in_", "")}
       </Badge>
     )
   }
@@ -121,12 +127,20 @@ export function UserProfilePage({ user }: UserProfilePageProps) {
     return status === "active" ? "default" : "secondary"
   }
 
-  const handleSaveEdit = () => {
-    // Here you would typically make an API call to update the user
-    console.log("Saving user updates:", editForm)
-    setIsEditDialogOpen(false)
-    // You could also show a success toast here
-  }
+const handleSaveEdit = () => {
+  const formData = new FormData()
+  formData.append("name", editForm.name)
+  formData.append("email", editForm.email)
+  formData.append("role", editForm.role)
+  formData.append("status", editForm.status)
+  formData.append("bio", editForm.bio)
+
+  UpdateUser(formData, user.id)
+
+  setIsEditDialogOpen(false)
+   router.refresh()
+}
+
 
   const formatDate = (date: Date) => {
     return new Intl.DateTimeFormat("en-US", {
@@ -325,59 +339,68 @@ export function UserProfilePage({ user }: UserProfilePageProps) {
             <MessageSquare className="h-5 w-5" />
             Associated Issues
             <Badge variant="outline" className="ml-2">
-              {user.customerResponses.length} total
+             {Array.isArray(user.customerResponses) ? user.customerResponses.length : 0} total
+
             </Badge>
           </CardTitle>
           <CardDescription>All issues and support tickets associated with this user account</CardDescription>
         </CardHeader>
-        <CardContent>
-          {user.customerResponses.length === 0 ? (
-            <div className="text-center py-8 text-muted-foreground">
-              <MessageSquare className="h-12 w-12 mx-auto mb-4 opacity-50" />
-              <p>No issues found for this user</p>
-            </div>
-          ) : (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Issue Title</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Chat Interactions</TableHead>
-                  <TableHead>Created</TableHead>
-                  <TableHead>Last Updated</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {user.customerResponses.map((response) => (
-                  <TableRow key={response.id} className="cursor-pointer hover:bg-muted/50">
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        {getStatusIcon(response.issue.status)}
-                        <div>
-                          <div className="font-medium">{response.issue.title}</div>
-                          <div className="text-sm text-muted-foreground truncate max-w-xs">{response.content}</div>
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell>{getStatusBadge(response.issue.status)}</TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-1">
-                        <MessageSquare className="h-4 w-4 text-muted-foreground" />
-                        <span>{response.issue.chatCount}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-sm text-muted-foreground">
-                      {formatDate(response.issue.createdAt)}
-                    </TableCell>
-                    <TableCell className="text-sm text-muted-foreground">
-                      {formatDate(response.issue.updatedAt)}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          )}
-        </CardContent>
+   <CardContent>
+  {user.customerResponses?.length === 0 ? (
+    <div className="text-center py-8 text-muted-foreground">
+      <MessageSquare className="h-12 w-12 mx-auto mb-4 opacity-50" />
+      <p>No issues found for this user</p>
+    </div>
+  ) : (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Issue Title</TableHead>
+          <TableHead>Status</TableHead>
+          <TableHead>Chat Interactions</TableHead>
+          <TableHead>Created</TableHead>
+          <TableHead>Last Updated</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        
+        {(user.customerResponses || []).map((response) => (
+          <TableRow key={response.id} onClick={()=> router.push(`/admin/issues/${response.questionId}`)} className="cursor-pointer hover:bg-muted/50">
+            <TableCell>
+              <div className="flex items-center gap-2">
+                {getStatusIcon(response.question.status)}
+                <div>
+                  <div className="font-medium">{response.question.title}</div>
+                  <div className="text-sm text-muted-foreground truncate max-w-xs">
+                    {response.content}
+                  </div>
+                </div>
+              </div>
+            </TableCell>
+            <TableCell>{getStatusBadge(response.question.status)}</TableCell>
+            <TableCell>
+              <div className="flex items-center gap-1">
+                <MessageSquare className="h-4 w-4 text-muted-foreground" />
+<span>
+  {(response.question.staffResponses?.length || 0)} response
+  {(response.question.staffResponses?.length || 0) !== 1 ? "s" : ""}
+</span>
+
+              </div>
+            </TableCell>
+            <TableCell className="text-sm text-muted-foreground">
+              {formatDate(response.question.createdAt)}
+            </TableCell>
+            <TableCell className="text-sm text-muted-foreground">
+              {formatDate(response.question.updatedAt)}
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  )}
+</CardContent>
+
       </Card>
     </div>
   )

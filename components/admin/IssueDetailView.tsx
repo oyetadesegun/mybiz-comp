@@ -125,7 +125,6 @@ export default function IssueDetailView({ issue }: IssueDetailViewProps) {
 
   const handleStatusUpdate = async (newStatus: Status) => {
     // TODO: Implement status update action
-    console.log("Updating status to:", newStatus)
     setStatus(newStatus)
   }
 

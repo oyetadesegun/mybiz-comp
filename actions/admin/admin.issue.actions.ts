@@ -15,7 +15,7 @@ export async function getAllIssues(){
     return {totalCount, thisMonthCount, allIssues}
 }
 export async function getIssueById({issueId}: {issueId: string}){
-const issue = prisma.getHelpQuestion.findUnique({
+const issue = await prisma.getHelpQuestion.findUnique({
     where: {
         id: issueId
     },
