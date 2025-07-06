@@ -2,8 +2,9 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ArrowRight, Shield, Users, TrendingUp, MessageCircle, Phone, Star } from "lucide-react"
-
+import { auth } from "@/auth"
 export default function Home() {
+  const session = auth
   return (
     <div className="flex-col min-h-screen">
       <header className="px-4 lg:px-6 h-16 flex items-center border-b border-gray-200 bg-white sticky top-0 z-50">
@@ -21,7 +22,7 @@ export default function Home() {
             Services
           </Link>
           <Link href="/login" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">
-            Login
+            {!session ? 'Login': 'Dashboard'}
           </Link>
           <Link href="/get-help">
             <Button className="bg-blue-600 hover:bg-blue-700 text-white">Get Help Now</Button>

@@ -33,7 +33,7 @@ export default function SideBar({ children }: { children: ReactNode }) {
   const pathname = usePathname()
 
   return (
-    <div className="max-lg:hidden relative w-78">
+    <div className="max-lg:hidden border-r relative w-78">
       <div className="flex flex-col max-h-[calc(100vh-70px)] sticky top-[80px] justify-between h-full bg-white border-r">
         <aside className="w-64 pt-8 border-gray-200 max-lg:hidden">
           <div className="flex h-full flex-col justify-between">

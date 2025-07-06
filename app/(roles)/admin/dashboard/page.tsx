@@ -4,16 +4,38 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Download } from "lucide-react";
-import { mockRecentActivity, mockKPIs } from "@/lib/admin-mock-data";
+import Link from "next/link";
+import AdminDashboardData from "@/components/admin/AdminDashboardData";
+// types/admin.ts (or inside the same file for now)
+import { LucideIcon } from "lucide-react";
 
-export default function OverviewPage() {
+export interface KPI {
+  title: string;
+  value: string;
+  change: string;
+  icon: LucideIcon;
+  color: string;
+  changeColor: string;
+  link: string;
+}
+
+export interface ActivityLog {
+  action: string;
+  timestamp: string;
+  icon: LucideIcon;
+}
+
+
+
+export default async function OverviewPage() {
+  const {mockKPIs, mockRecentActivity} = await AdminDashboardData();
   return (
     <>
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold tracking-tight text-gray-900">
           System Overview & KPIs
         </h1>
-        <Button className="bg-red-600 hover:bg-red-700 text-white">
+        <Button className="bg-red-600 hover:bg-red-700 text-white mb-2">
           <Download className="mr-2 h-4 w-4" />
           Export Report
         </Button>
@@ -21,7 +43,8 @@ export default function OverviewPage() {
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-10">
         {mockKPIs.map((kpi, index) => (
-          <Card key={index}>
+          <Link key={index} href={kpi.link}>
+          <Card >
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">{kpi.title}</CardTitle>
               <kpi.icon className={`h-4 w-4 ${kpi.color}`} />
@@ -31,6 +54,7 @@ export default function OverviewPage() {
               <p className={`text-xs ${kpi.changeColor}`}>{kpi.change}</p>
             </CardContent>
           </Card>
+          </Link>
         ))}
       </div>
 
@@ -81,3 +105,4 @@ export default function OverviewPage() {
     </>
   );
 }
+

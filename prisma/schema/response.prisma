@@ -1,0 +1,26 @@
+model Response {
+  id           String          @id @default(uuid())
+  content      String
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  questionId   String
+  staffId      String
+  customerId   String
+  responseType ResponseType?
+  customer     User            @relation("CustomerResponses", fields: [customerId], references: [id])
+  question     GetHelpQuestion @relation(fields: [questionId], references: [id])
+  staff        User            @relation("StaffResponses", fields: [staffId], references: [id])
+
+  @@index([questionId])
+  @@index([staffId])
+  @@index([customerId])
+}
+
+enum ResponseType {
+  ADMIN
+  CX
+  AGENT
+  AUDITOR
+  FINANCE
+  SERVICE_PROVIDER
+}

@@ -2,7 +2,7 @@
 import NextAuth, { CredentialsSignin } from "next-auth"
 import Google from "next-auth/providers/google"
 import Credentials from "next-auth/providers/credentials"
-import { createUser, getUserByEmail } from "./actions/user/user-services";
+import { createUser, getUserByEmail, updateLastLoggedIn } from "./actions/user/user.actions";
 import { Role, User } from "@prisma/client";
 import { bcryptCompare, bcryptHash } from "./actions/services/hash-service";
 
@@ -65,16 +65,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             email,
             name: `${firstName.trim()} ${lastName.trim()}`,
             password: hashedPassword,
+            avatar: "/placeholder-user.jpg"
           })
 
           return newUser
         }
 
-        console.log("login flow")
 
         // Login flow
         const user = await getUserByEmail(email)
-        console.log(user)
         if (!user) {
           throw new CustomError("Email supplied not registered", {
             email, password
@@ -88,8 +87,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           });
         }
 
-
-        console.log(user)
         const isPasswordValid = await bcryptCompare({
           password,
           hashedPassword: user.password,
@@ -102,6 +99,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             email, password
           });
         }
+        await updateLastLoggedIn(user.id)
 
         return user
       }
@@ -117,7 +115,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!activeUser) {
           activeUser = await createUser({
             email: user.email,
-            name: user.name || ""
+            name: user.name || "",
+            avatar: user.image || "",
           })
         }
         token.role = activeUser.role;
@@ -128,7 +127,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
     async session({ session, token }) {
       if (token?.role) {
-        console.log(session.user)
         // const testUser = session.user as unknown as any
         session.user.role = token.role as Role;
       }

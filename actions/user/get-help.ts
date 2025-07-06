@@ -1,14 +1,20 @@
 'use server'
 
-import prisma from "@/prisma/client/client";
-import { helpFormSchema, HelpFormType } from "@/validations/get-help-validation"
+import prisma from "@/prisma/client";
+import { helpFormSchema, HelpFormType } from "@/validations/get-help-validation";
 import { redirect } from "next/navigation";
+import { auth } from "@/auth";
+import { createUser } from "./user.actions";
 
 export async function createNewHelpForm(
+
   prevState: { errors: Partial<Record<keyof HelpFormType, string[]>> } | undefined,
   formData: FormData
 ) {
-  const rawData = Object.fromEntries(formData.entries())
+  const session = await auth();
+  console.log("this =>", session?.user.email)
+
+  const rawData = Object.fromEntries(formData.entries());
 
   let parsedDocuments: unknown[] | undefined;
 
@@ -20,30 +26,47 @@ export async function createNewHelpForm(
         errors: {
           documents: ["Invalid document data format. Could not parse JSON."],
         },
-        success: false
+        success: false,
       };
     }
   }
 
+  // If logged in, override email with session email
+  const effectiveEmail = session?.user?.email ?? rawData.emailAddress;
+
   const dataForValidation = {
     ...rawData,
+    emailAddress: effectiveEmail,
     documents: parsedDocuments,
   };
 
-  const parsed = helpFormSchema.safeParse(dataForValidation)
+  const parsed = helpFormSchema.safeParse(dataForValidation);
 
   if (!parsed.success) {
     return {
       errors: parsed.error.flatten().fieldErrors,
-    }
+    };
   }
 
+  const payload = parsed.data;
 
-  const payload = parsed.data
+  let userId: string | null = null
+  const existingUser = await prisma.user.findFirst({
+    where: {
+      email: payload.emailAddress
+    }
+  })
+  console.log(existingUser)
+  if (existingUser) {
+    userId = existingUser.id
+  } else {
+    const newUser = await createUser({ email: payload.emailAddress, name: payload.fullName, status: "inactive", })
+    userId = newUser.id
+  }
 
   await prisma.getHelpQuestion.create({
     data: {
-      profileId: null, // or actual user ID if available
+      userId: userId,
       emailAddress: payload.emailAddress,
       title: payload.title,
       businessName: payload.businessName,
@@ -59,7 +82,6 @@ export async function createNewHelpForm(
       instagramUrl: payload.instagramUrl,
       twitterUrl: payload.twitterUrl,
       facebookUrl: payload.facebookUrl,
-
       documents: payload.documents && payload.documents.length > 0
         ? {
           create: payload.documents.map(doc => ({
@@ -72,6 +94,5 @@ export async function createNewHelpForm(
     }
   });
 
-  redirect("/thank-you")
-
+  redirect("/thank-you");
 }

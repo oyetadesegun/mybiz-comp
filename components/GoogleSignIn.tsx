@@ -7,7 +7,7 @@ export default function GoogleSignIn() {
       className="w-full flex justify-center"
       action={async () => {
         "use server"
-        await signIn("google", { redirectTo: "/admin" })
+        await signIn("google", { redirectTo: "/admin/dashboard" })
       }}
     >
       <Button variant="ghost" type="submit" className="mx-4  w-full text-gray-900 bg-accent" >Continuue with Google</Button>

@@ -1,22 +1,32 @@
 model User {
-  id       String   @id @default(uuid())
-  email    String   @unique
-  name     String?
-  role     Role     @default(USER)
-  password String?
-  profile  Profile?
+  id                String            @id @default(uuid())
+  email             String            @unique
+  name              String?
+  role              Role              @default(USER)
+  password          String?
+  avatar            String?
+  lastLoggedIn      DateTime          @default(now())
+  status            UserStatus        @default(active)
+  profile           Profile?
+  issues            GetHelpQuestion[]
+  customerResponses Response[]        @relation("CustomerResponses")
+  staffResponses    Response[]        @relation("StaffResponses")
 }
 
 model Profile {
-  id        String            @id @default(uuid())
-  bio       String
-  user      User              @relation(fields: [userId], references: [id])
-  userId    String            @unique
-  questions GetHelpQuestion[]
+  id     String @id @default(uuid())
+  bio    String
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
 }
 
 enum Role {
   USER
   ADMIN
   STAFF
+}
+
+enum UserStatus {
+  active
+  inactive
 }

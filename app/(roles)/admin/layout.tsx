@@ -10,7 +10,7 @@ import { SignOut } from "@/components/SignOut";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col ">
       <header className="px-4 lg:px-6 h-16 flex items-center border-b border-gray-200 bg-white">
         <Link href="/" className="flex items-center">
           <div className="h-8 w-8 bg-gradient-to-br from-red-600 to-orange-600 rounded-lg flex items-center justify-center">
